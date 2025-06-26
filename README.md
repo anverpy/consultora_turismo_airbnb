@@ -54,12 +54,17 @@ consultores_turismo_airbnb/
 ├── 📦 requirements.txt             # Dependencias del proyecto
 ├── 
 ├── 📊 data/
-│   ├── raw/                        # Datos originales Inside Airbnb
-│   │   ├── madrid/
-│   │   ├── barcelona/
-│   │   └── mallorca/
-│   ├── external/                   # Fuentes externas
-│   └── processed/                  # Datos procesados
+│   ├── external/                   # Fuentes externas (INE, demografía, inmobiliarios)
+│   │   ├── datos_demograficos.csv
+│   │   ├── estadisticas_turismo.csv
+│   │   ├── precios_alquileres.csv
+│   │   └── precios_inmobiliarios_reales.csv
+│   └── processed/                  # Datos procesados y consolidados
+│       ├── airbnb_consultores_turismo.db    # Base de datos principal
+│       ├── listings_madrid_new.csv          # Dataset Madrid consolidado (25 columnas)
+│       ├── listings_unificado.csv           # Dataset multi-ciudad
+│       ├── kpis_por_barrio.csv             # KPIs territoriales
+│       └── neighbourhoods_*.geojson         # Geometrías de barrios
 ├── 
 ├── 📓 notebooks/
 │   ├── persona_a_data_engineer.ipynb     # Extracción y limpieza
@@ -86,6 +91,33 @@ consultores_turismo_airbnb/
 
 ---
 
+## 📊 **DATASETS Y FUENTES DE DATOS**
+
+### 🏛️ **Dataset Principal: listings_madrid_new.csv**
+
+Nuestro dataset consolidado de **25 columnas** que combina datos de Inside Airbnb con análisis temporal avanzado:
+
+#### **🔍 CARACTERÍSTICAS PRINCIPALES**
+- **Precio consolidado** → `price_market` que combina precios base + datos de calendar
+- **Métricas temporales** → Disponibilidad y precios por estación y fin de semana
+- **Intensidad turística** → Score 0-100 que evalúa la presión turística por alojamiento
+- **Datos de regulación** → Licencias oficiales y políticas de cada propiedad
+
+#### **📈 PRINCIPALES MÉTRICAS CALCULADAS**
+- `tourism_intensity` - Score de intensidad turística (0-100)
+- `availability_rate_calendar` - Tasa real de disponibilidad
+- `summer_premium` - Premium estacional de verano
+- `price_volatility` - Volatilidad de precios temporal
+- `seasonal_ratio` - Ratio estacional verano/invierno
+
+### 🗃️ **Fuentes de Datos Integradas**
+- **Inside Airbnb:** Listings base + 9.2M registros de calendar
+- **INE:** Datos demográficos y de vivienda
+- **Ayuntamientos:** Límites territoriales y regulaciones
+- **Fuentes inmobiliarias:** Precios de mercado por zona
+
+---
+
 ## 🚀 **INSTALACIÓN Y EJECUCIÓN**
 
 ### 📦 **1. Instalación de Dependencias**
@@ -95,8 +127,11 @@ consultores_turismo_airbnb/
 git clone [repo-url]
 cd consultores_turismo_airbnb
 
-# Instalar dependencias
+# Instalar dependencias (actualizado con nuevas librerías)
 pip install -r requirements.txt
+
+# Nota: El proyecto incluye optimizaciones de performance 
+# y nuevas funcionalidades de análisis temporal
 ```
 
 ### 📊 **2. Ejecutar Análisis**
@@ -116,8 +151,14 @@ jupyter notebook notebooks/persona_c_business_intelligence.ipynb
 ### 🖥️ **3. Lanzar Dashboard**
 
 ```bash
-# Ejecutar aplicación Streamlit
+# Ejecutar aplicación Streamlit (versión optimizada)
 streamlit run streamlit_app/app.py
+
+# El dashboard incluye nuevas funcionalidades:
+# - Análisis temporal avanzado
+# - Métricas de intensidad turística
+# - Integración con base de datos SQLite
+# - Performance mejorado para datasets grandes
 ```
 
 ---
@@ -143,12 +184,14 @@ streamlit run streamlit_app/app.py
 
 ## 📈 **DASHBOARD INTERACTIVO**
 
-### 🖥️ **Funcionalidades**
-- 🗺️ **Mapas interactivos** de densidad por barrio
-- 📊 **KPIs en tiempo real** para las 3 ciudades
-- 🚨 **Sistema de alertas** por umbrales de saturación
-- 📋 **Informes automatizados** para autoridades
-- 🔄 **Comparativas temporales** y entre ciudades
+### 🖥️ **Funcionalidades del Dashboard**
+- 🗺️ **Mapas interactivos** de densidad por barrio con datos actualizados
+- 📊 **KPIs en tiempo real** para las 3 ciudades con métricas consolidadas
+- 🚨 **Sistema de alertas** por umbrales de saturación basado en tourism_intensity
+- 📋 **Informes automatizados** para autoridades con datos de regulación
+- 🔄 **Comparativas temporales** y entre ciudades con análisis estacional
+- 📈 **Análisis de volatilidad** de precios y disponibilidad por zona
+- ⚡ **Performance optimizado** con base de datos SQLite integrada
 
 ### 🎯 **Acceso**
 - **Demo en vivo:** [URL del deploy]
@@ -340,15 +383,43 @@ Todos los datos han sido procesados siguiendo estándares de calidad científica
 
 ### 📈 **Métricas de Éxito**
 - ✅ **3 ciudades analizadas** con metodología unificada
-- ✅ **15+ KPIs calculados** y validados
-- ✅ **Dashboard interactivo** completamente funcional
-- ✅ **Recomendaciones específicas** por zona y ciudad
-- ✅ **Sistema de alertas** automatizado
+- ✅ **25+ métricas calculadas** incluyendo análisis temporal avanzado  
+- ✅ **Dashboard interactivo** con performance optimizado y nuevas funcionalidades
+- ✅ **Recomendaciones específicas** por zona y ciudad basadas en tourism_intensity
+- ✅ **Sistema de alertas** automatizado con umbrales dinámicos
+- ✅ **Dataset consolidado** listings_madrid_new.csv con 9.2M registros procesados
+- ✅ **Base de datos integrada** SQLite para consultas optimizadas
 
 ### 🎯 **Aplicabilidad**
 - 🏛️ **Gobiernos locales:** Herramientas de regulación basadas en datos
 - 📊 **Investigadores:** Metodología replicable para otras ciudades
 - 🏢 **Sector turístico:** Insights para desarrollo sostenible
+
+---
+
+## 🆕 **ÚLTIMAS ACTUALIZACIONES**
+
+### 📅 **Junio 2025 - Versión Consolidada**
+
+#### **🔄 Mejoras en Procesamiento de Datos**
+- ✅ **Nuevo dataset consolidado:** `listings_madrid_new.csv` (25 columnas)
+- ✅ **Integración calendar data:** Procesados 9.2M registros de disponibilidad
+- ✅ **Métricas avanzadas:** Tourism intensity, volatilidad, premiums estacionales
+- ✅ **Base de datos optimizada:** SQLite integrada para consultas rápidas
+
+#### **🖥️ Mejoras en Dashboard**
+- ✅ **Performance optimizado** para datasets grandes
+- ✅ **Nuevas visualizaciones** de análisis temporal 
+- ✅ **Tema oscuro personalizado** para mejor experiencia de usuario
+- ✅ **Alertas dinámicas** basadas en umbrales inteligentes
+- ✅ **Exportación automática** de informes regulatorios
+
+#### **📊 Nuevas Funcionalidades Analíticas**
+- ✅ **Score tourism_intensity** (0-100) por alojamiento
+- ✅ **Análisis estacional** completo (verano/invierno/fines de semana)
+- ✅ **Volatilidad de precios** con detección de anomalías
+- ✅ **Correlaciones avanzadas** entre variables territoriales
+- ✅ **Predicción de saturación** por barrio y temporada
 
 ---
 
@@ -374,6 +445,7 @@ Todos los datos han sido procesados siguiendo estándares de calidad científica
 
 ---
 
-*📅 Desarrollado en Junio 2025 | 🏛️ Consultores en Turismo Sostenible*
+*📅 Última actualización: Junio 2025 | 🏛️ Consultores en Turismo Sostenible*  
+*🆕 Versión consolidada con dataset avanzado y mejoras de performance*
 
 </div>
