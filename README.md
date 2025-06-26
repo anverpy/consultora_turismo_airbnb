@@ -3,7 +3,12 @@
 <div align="center">
 
 ![Python](https://img.shields.io/badge/Python-3.9+-blue?style=for-the-badge&logo=python)
-![Streamlit](https://img.shields.io/badge/Streamlit-1.29.0-red?style=for-the-badge&logo=streamlit)
+![Stre### 🔗 **Enlaces Importantes**
+- 🛠️ **Guía técnica:** `/docs/technical_guide.md`
+- 📊 **Manual de KPIs:** `/docs/kpis_methodology.md`
+- 🖥️ **Manual dashboard:** `/docs/dashboard_manual.md`
+- 🎯 **Guión presentación:** `/docs/presentation_script.md`
+- 📊 **Slides presentación:** `/docs/presentation_slides.md`t](https://img.shields.io/badge/Streamlit-1.29.0-red?style=for-the-badge&logo=streamlit)
 ![Status](https://img.shields.io/badge/Status-Complete-green?style=for-the-badge)
 
 ### 📊 Análisis del Impacto Urbano de Airbnb en España
@@ -47,7 +52,6 @@
 consultores_turismo_airbnb/
 ├── 📋 README.md                    # Documentación principal
 ├── 📦 requirements.txt             # Dependencias del proyecto
-├── 📓 instruccionesCOPILOT.ipynb   # Instrucciones completas
 ├── 
 ├── 📊 data/
 │   ├── raw/                        # Datos originales Inside Airbnb
@@ -73,6 +77,11 @@ consultores_turismo_airbnb/
 │   └── visualization/              # Módulos de visualización
 └── 
 └── 📖 docs/                        # Documentación adicional
+    ├── technical_guide.md          # Guía técnica del proyecto
+    ├── kpis_methodology.md         # Manual de metodología KPIs
+    ├── dashboard_manual.md         # Manual de usuario dashboard
+    ├── presentation_script.md      # Guión presentación ejecutiva (20 min)
+    └── presentation_slides.md      # Especificaciones slides (18 slides)
 ```
 
 ---
@@ -170,6 +179,32 @@ streamlit run streamlit_app/app.py
 
 ---
 
+## 🎤 **PRESENTACIONES EJECUTIVAS**
+
+### 📊 **Material para Gobiernos Locales**
+
+Hemos desarrollado un **paquete completo de presentación ejecutiva** diseñado específicamente para consultores que presenten este análisis ante autoridades municipales y regionales.
+
+#### 🎯 **Guión de Presentación (20 minutos)**
+- **Archivo:** `/docs/presentation_script.md`
+- **Estructura:** Introducción → Metodología → Resultados → Recomendaciones → Herramientas
+- **Enfoque:** Consultor profesional con autoridad técnica
+- **Incluye:** Material Q&A, gestión de objeciones, propuesta comercial
+
+#### 📊 **Slides Detalladas (18 slides)**
+- **Archivo:** `/docs/presentation_slides.md`
+- **Contenido:** Especificaciones técnicas de cada slide
+- **Visuales:** Mapas coropléticos, gráficos evolución, comparativas UE
+- **Timing:** 1-2 minutos por slide con transiciones fluidas
+
+#### 🎭 **Casos de Uso**
+- **Ayuntamientos:** Presentación a alcaldes y concejales de turismo
+- **Comunidades Autónomas:** Briefing a consejerías de turismo
+- **Consultoras:** Pitch comercial a gobiernos locales
+- **Investigadores:** Presentación de resultados en conferencias
+
+---
+
 ## 👥 **EQUIPO DE DESARROLLO**
 
 ### 🔧 **Persona A - Data Engineer**
@@ -192,10 +227,11 @@ streamlit run streamlit_app/app.py
 ## 📚 **DOCUMENTACIÓN TÉCNICA**
 
 ### 🔗 **Enlaces Importantes**
-- 📖 **Metodología completa:** `instruccionesCOPILOT.ipynb`
 - 🛠️ **Guía técnica:** `/docs/technical_guide.md`
 - 📊 **Manual de KPIs:** `/docs/kpis_methodology.md`
 - 🖥️ **Manual dashboard:** `/docs/dashboard_manual.md`
+- 🎯 **Guión presentación:** `/docs/presentation_script.md`
+- 📊 **Slides presentación:** `/docs/presentation_slides.md`
 
 ### 📋 **Fuentes de Datos y Referencias Bibliográficas**
 
