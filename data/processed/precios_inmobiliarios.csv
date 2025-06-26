@@ -1,19 +1,4 @@
-ciudad,zona,precio_alquiler_m2,precio_compra_m2
-madrid,Centro,22.5,6500
-madrid,Chamberí,18.9,5800
-madrid,Salamanca,20.1,6200
-madrid,Retiro,17.8,5500
-madrid,Chamartín,16.5,5200
-madrid,Otras_zonas,13.2,3800
-barcelona,Ciutat Vella,25.8,7200
-barcelona,Eixample,21.3,6100
-barcelona,Gràcia,19.7,5600
-barcelona,Sarrià-Sant Gervasi,23.1,6800
-barcelona,Sants-Montjuïc,16.4,4700
-barcelona,Otras_zonas,14.8,4200
-mallorca,Palma_Centro,18.5,4200
-mallorca,Palma_Ensanche,15.2,3600
-mallorca,Calvià,16.8,3900
-mallorca,Alcúdia,12.5,2800
-mallorca,Sóller,14.3,3200
-mallorca,Otras_zonas,10.8,2400
+ciudad,precio_alquiler_mensual,precio_alquiler_diario,fuente
+madrid,887.4,29.58,Datos mercado inmobiliario real
+barcelona,902.8,30.09,Datos mercado inmobiliario real
+mallorca,751.1,25.04,Datos mercado inmobiliario real

@@ -3,11 +3,18 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
-import folium
-from streamlit_folium import st_folium
 import sqlite3
 from pathlib import Path
 import numpy as np
+
+# Imports opcionales para folium (para evitar errores en deploy)
+try:
+    import folium
+    from streamlit_folium import st_folium
+    FOLIUM_AVAILABLE = True
+except ImportError:
+    FOLIUM_AVAILABLE = False
+    st.warning("⚠️ Folium no disponible - los mapas interactivos estarán deshabilitados")
 
 # Configuración de la página
 st.set_page_config(
@@ -199,11 +206,10 @@ def cargar_datos():
         # Ruta de la base del proyecto y archivo de base de datos
         base_dir = Path(__file__).resolve().parent.parent
         db_path = base_dir / "data" / "processed" / "airbnb_consultores_turismo.db"
-        # Mostrar ruta absoluta para debugging
-        st.info(f"🔍 Buscando base de datos en: {db_path}")
          
         if not db_path.exists():
             st.error(f"❌ Base de datos no encontrada en: {db_path}")
+            st.info("💡 Asegúrate de que el archivo 'airbnb_consultores_turismo.db' esté en la carpeta data/processed/")
             return None, None, None, None
         
         conn = sqlite3.connect(str(db_path))
@@ -279,30 +285,25 @@ def calcular_metricas_principales(df_kpis_ciudad, df_kpis_barrio, df_listings):
         try:
             # Buscar columnas que puedan contener precios
             precio_cols = [col for col in df_listings.columns if 'price' in col.lower()]
-            st.info(f"🔍 Columnas de precio disponibles: {precio_cols}")
             
-            for col in precio_cols:
-                if col in df_listings.columns:
-                    # Mostrar algunos valores de muestra para debug
-                    sample_prices = df_listings[col].head(10).tolist()
-                    st.info(f"📊 Muestra de {col}: {sample_prices}")
-                    
-                    # Intentar limpiar y convertir precios
-                    precios_clean = df_listings[col].astype(str).str.replace(r'[€$,\s]', '', regex=True)
-                    precios_clean = pd.to_numeric(precios_clean, errors='coerce')
-                    precios_clean = precios_clean.dropna()
-                    
-                    if len(precios_clean) > 0:
-                        precio_medio = precios_clean.mean()
-                        st.info(f"✅ Precio medio calculado desde {col}: {precio_medio:.2f}")
-                        break
+            if precio_cols:
+                for col in precio_cols:
+                    if col in df_listings.columns:
+                        # Intentar limpiar y convertir precios
+                        precios_clean = df_listings[col].astype(str).str.replace(r'[€$,\s]', '', regex=True)
+                        precios_clean = pd.to_numeric(precios_clean, errors='coerce')
+                        precios_clean = precios_clean.dropna()
+                        
+                        if len(precios_clean) > 0:
+                            precio_medio = precios_clean.mean()
+                            break
         except Exception as e:
-            st.error(f"❌ Error calculando precio medio: {e}")
+            # En caso de error, usar valor por defecto sin mostrar error
+            pass
     
     # Si todavía es 0, usar valor por defecto
     if precio_medio == 0:
         precio_medio = 85  # Precio promedio estimado para España
-        st.warning("⚠️ Usando precio por defecto: 85€/noche")
     
     return {
         'total_listings': total_listings,
@@ -385,8 +386,7 @@ def crear_mapa_coropletico(df_kpis_barrio, ciudad_seleccionada):
         data_path = base_dir / "data" / "processed"
         geojson_file = f"neighbourhoods_{ciudad_seleccionada.lower()}.geojson"
         geojson_path = data_path / geojson_file
-        # Mostrar ruta absoluta para debugging
-        st.info(f"🔍 Buscando GeoJSON en: {geojson_path}")
+        
         if not geojson_path.exists():
             st.warning(f"⚠️ Archivo GeoJSON no encontrado: {geojson_file}")
             return None
@@ -419,15 +419,11 @@ def crear_mapa_coropletico(df_kpis_barrio, ciudad_seleccionada):
                 normalized_name = original_name.lower().strip()
                 feature['properties']['neighbourhood_norm'] = normalized_name
         
-        # Recopilar nombres para debug
+        # Recopilar nombres para el matching
         geojson_barrios = [f['properties']['neighbourhood_norm'] for f in geojson_data['features'] if 'neighbourhood_norm' in f['properties']]
-          # Mostrar información de debug
-        st.info(f"📊 Datos encontrados: {len(df_viz)} barrios")
-        st.info(f"🗺️ GeoJSON tiene: {len(geojson_barrios)} barrios")
         
         # Verificar matches
         matches = df_viz['barrio_norm'].isin(geojson_barrios)
-        st.info(f"✅ Barrios con match: {matches.sum()}/{len(df_viz)}")
         
         if matches.sum() == 0:
             st.warning("⚠️ No hay coincidencias entre los datos y el GeoJSON")

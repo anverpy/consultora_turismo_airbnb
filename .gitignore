@@ -12,12 +12,15 @@ data/raw/**/*
 # ==============================================
 # ARCHIVOS DE DATOS PROCESADOS GRANDES
 # ==============================================
-# Bases de datos SQLite
-*.db
-*.sqlite
-*.sqlite3
+# Excluir bases de datos SQLite grandes EXCEPTO la procesada
+# *.db
+# *.sqlite
+# *.sqlite3
 
-# Archivos CSV grandes (opcional - comentar si se quieren incluir)
+
+
+# Archivos CSV muy grandes (comentar si se quieren incluir algunos)
+# data/processed/listings_unificado.csv
 # *.csv
 
 # Archivos de datos comprimidos

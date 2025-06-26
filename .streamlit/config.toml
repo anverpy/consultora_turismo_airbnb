@@ -3,15 +3,20 @@ developmentMode = false
 
 [server]
 headless = true
+port = 8501
 enableCORS = false
 enableXsrfProtection = false
+maxUploadSize = 200
 
 [theme]
-primaryColor = "#1f77b4"
-backgroundColor = "#ffffff"
-secondaryBackgroundColor = "#f8f9fa"
-textColor = "#262730"
+primaryColor = "#00d4ff"
+backgroundColor = "#0e1117"
+secondaryBackgroundColor = "#1e1e1e"
+textColor = "#fafafa"
 font = "sans serif"
 
 [browser]
 gatherUsageStats = false
+
+[client]
+caching = true
