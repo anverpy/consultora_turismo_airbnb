@@ -1,0 +1,162 @@
+# Gitignore para Proyecto Consultores Turismo Airbnb
+# Excluir datos raw y archivos temporales
+
+# ==============================================
+# DATOS RAW - NO INCLUIR EN REPOSITORIO
+# ==============================================
+# Excluir toda la carpeta raw y sus subcarpetas
+data/raw/
+data/raw/*
+data/raw/**/*
+
+# ==============================================
+# ARCHIVOS DE DATOS PROCESADOS GRANDES
+# ==============================================
+# Bases de datos SQLite
+*.db
+*.sqlite
+*.sqlite3
+
+# Archivos CSV grandes (opcional - comentar si se quieren incluir)
+# *.csv
+
+# Archivos de datos comprimidos
+*.zip
+*.gz
+*.tar.gz
+*.rar
+
+# ==============================================
+# ARCHIVOS TEMPORALES Y CACHE
+# ==============================================
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# PyCache
+.pytest_cache/
+
+# ==============================================
+# ENTORNOS VIRTUALES
+# ==============================================
+# Virtual environments
+venv/
+env/
+ENV/
+.venv/
+.env/
+
+# Conda environments
+.conda/
+
+# ==============================================
+# CONFIGURACIÓN LOCAL
+# ==============================================
+# Variables de entorno
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Configuración local de VS Code
+.vscode/settings.json
+.vscode/launch.json
+.vscode/tasks.json
+
+# ==============================================
+# ARCHIVOS DEL SISTEMA
+# ==============================================
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+
+# Linux
+*~
+.directory
+
+# ==============================================
+# LOGS Y ARCHIVOS TEMPORALES
+# ==============================================
+# Logs
+*.log
+logs/
+log/
+
+# Archivos temporales
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# ==============================================
+# ARCHIVOS DE BACKUP
+# ==============================================
+# Backups
+*.bak
+*.backup
+*.old
+
+# ==============================================
+# STREAMLIT
+# ==============================================
+# Streamlit secrets
+.streamlit/secrets.toml
+
+# ==============================================
+# ARCHIVOS ESPECÍFICOS DEL PROYECTO
+# ==============================================
+# Archivos de configuración sensibles
+config/secrets.yaml
+config/api_keys.json
+
+# Datos de prueba temporales
+temp_data/
+test_data/
+
+# Reportes y outputs temporales
+outputs/temp/
+reports/draft/
+
+# ==============================================
+# COMENTARIOS ADICIONALES
+# ==============================================
+# Este .gitignore está diseñado para:
+# 1. Proteger datos raw que pueden ser sensibles o muy grandes
+# 2. Evitar subir archivos temporales y cache
+# 3. Mantener el repositorio limpio y funcional
+# 4. Permitir colaboración sin conflictos de archivos locales
+#
+# NOTA: Los datos procesados en data/processed/ SÍ se incluyen
+# ya que son necesarios para el funcionamiento del dashboard

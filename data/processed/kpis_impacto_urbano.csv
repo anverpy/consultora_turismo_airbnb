@@ -1,0 +1,4 @@
+ciudad,total_listings,listings_entire_home,capacidad_total,precio_medio_euros,poblacion_total,superficie_km2,densidad_listings_km2,densidad_listings_1000hab,ratio_entire_home_pct,alquiler_mensual_real_euros,alquiler_diario_real_euros,fuente,nivel_saturacion,capacidad_turistica_vs_poblacion_pct,evaluacion_sobrecarga,indice_impacto_urbano,clasificacion_impacto
+madrid,25288,16805,0,,3280782,604.3,41.85,7.71,66.45,887.4,29.58,Datos reales mercado inmobiliario 2024,🟡 MODERADA,0.0,🟢 CARGA SOSTENIBLE,15.4,🟢 IMPACTO BAJO
+barcelona,19422,11858,0,,1636762,101.4,191.54,11.87,61.05,902.8,30.09,Datos reales mercado inmobiliario 2024,🟠 ALTA,0.0,🟢 CARGA SOSTENIBLE,23.7,🟢 IMPACTO BAJO
+mallorca,16404,15091,0,,896038,3640.11,4.51,18.31,92.0,751.1,25.04,Datos reales mercado inmobiliario 2024,🔴 CRÍTICA,0.0,🟢 CARGA SOSTENIBLE,30.0,🟡 IMPACTO MODERADO

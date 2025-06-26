@@ -1,0 +1,253 @@
+ciudad,barrio,total_listings,listings_entire_home,capacidad_total,precio_medio_euros,ratio_entire_home_pct
+madrid,Cármenes,75,30,0,,40.0
+madrid,Sol,1326,970,0,,73.15
+madrid,Embajadores,2801,2088,0,,74.54
+madrid,Universidad,2240,1668,0,,74.46
+madrid,Justicia,1272,968,0,,76.1
+madrid,Recoletos,319,292,0,,91.54
+madrid,Valverde,108,61,0,,56.48
+madrid,Pueblo Nuevo,220,108,0,,49.09
+madrid,Rios Rosas,247,169,0,,68.42
+madrid,Los Angeles,51,16,0,,31.37
+madrid,Trafalgar,517,375,0,,72.53
+madrid,Piovera,31,19,0,,61.29
+madrid,Palacio,1818,1377,0,,75.74
+madrid,Castellana,203,173,0,,85.22
+madrid,Cortes,1042,821,0,,78.79
+madrid,Canillas,146,66,0,,45.21
+madrid,Arapiles,254,168,0,,66.14
+madrid,Chopera,179,106,0,,59.22
+madrid,Valdefuentes,148,105,0,,70.95
+madrid,Delicias,221,121,0,,54.75
+madrid,Niño Jesús,73,53,0,,72.6
+madrid,Acacias,239,147,0,,61.51
+madrid,Lista,228,163,0,,71.49
+madrid,Comillas,167,102,0,,61.08
+madrid,Rosas,60,11,0,,18.33
+madrid,Concepción,91,57,0,,62.64
+madrid,Puerta del Angel,340,178,0,,52.35
+madrid,Pacífico,323,178,0,,55.11
+madrid,Hispanoamérica,146,106,0,,72.6
+madrid,Casco Histórico de Barajas,62,29,0,,46.77
+madrid,San Fermín,53,18,0,,33.96
+madrid,Palos de Moguer,438,276,0,,63.01
+madrid,Numancia,230,130,0,,56.52
+madrid,Lucero,103,44,0,,42.72
+madrid,Prosperidad,231,168,0,,72.73
+madrid,Castilla,98,67,0,,68.37
+madrid,Casco Histórico de Vallecas,116,57,0,,49.14
+madrid,Puerta Bonita,97,34,0,,35.05
+madrid,Costillares,45,37,0,,82.22
+madrid,Alameda de Osuna,41,8,0,,19.51
+madrid,San Diego,311,190,0,,61.09
+madrid,Ibiza,283,185,0,,65.37
+madrid,Argüelles,371,212,0,,57.14
+madrid,Arcos,46,12,0,,26.09
+madrid,Castillejos,285,189,0,,66.32
+madrid,Simancas,126,63,0,,50.0
+madrid,Timón,47,23,0,,48.94
+madrid,Salvador,23,7,0,,30.43
+madrid,Jerónimos,108,76,0,,70.37
+madrid,Ciudad Universitaria,85,41,0,,48.24
+madrid,Marroquina,33,16,0,,48.48
+madrid,Goya,413,327,0,,79.18
+madrid,Gaztambide,264,141,0,,53.41
+madrid,Palomeras Sureste,61,23,0,,37.7
+madrid,Cuatro Caminos,393,288,0,,73.28
+madrid,San Juan Bautista,33,17,0,,51.52
+madrid,Almenara,200,150,0,,75.0
+madrid,Almagro,234,179,0,,76.5
+madrid,San Andrés,90,46,0,,51.11
+madrid,Nueva España,144,118,0,,81.94
+madrid,El Viso,109,65,0,,59.63
+madrid,Ventas,259,126,0,,48.65
+madrid,Rejas,154,114,0,,74.03
+madrid,Moscardó,148,74,0,,50.0
+madrid,Imperial,191,131,0,,68.59
+madrid,Fontarrón,71,13,0,,18.31
+madrid,Berruguete,215,153,0,,71.16
+madrid,Vista Alegre,165,66,0,,40.0
+madrid,Guindalera,378,268,0,,70.9
+madrid,Casa de Campo,84,53,0,,63.1
+madrid,Adelfas,139,108,0,,77.7
+madrid,Pinar del Rey,141,92,0,,65.25
+madrid,Bellas Vistas,244,166,0,,68.03
+madrid,Fuente del Berro,143,102,0,,71.33
+madrid,Valdezarza,77,31,0,,40.26
+madrid,El Plantío,15,1,0,,6.67
+madrid,San Isidro,216,126,0,,58.33
+madrid,San Pascual,51,18,0,,35.29
+madrid,Mirasierra,26,9,0,,34.62
+madrid,Quintana,103,53,0,,51.46
+madrid,Ciudad Jardín,124,90,0,,72.58
+madrid,Aluche,87,32,0,,36.78
+madrid,Abrantes,62,15,0,,24.19
+madrid,Peñagrande,72,29,0,,40.28
+madrid,Colina,25,18,0,,72.0
+madrid,Legazpi,60,40,0,,66.67
+madrid,Opañel,159,84,0,,52.83
+madrid,Vallehermoso,127,86,0,,67.72
+madrid,Casco Histórico de Vicálvaro,63,21,0,,33.33
+madrid,Valdemarín,9,5,0,,55.56
+madrid,Atocha,50,40,0,,80.0
+madrid,Valdeacederas,238,178,0,,74.79
+madrid,Zofío,54,30,0,,55.56
+madrid,Palomas,9,5,0,,55.56
+madrid,Almendrales,113,74,0,,65.49
+madrid,Campamento,36,5,0,,13.89
+madrid,Palomeras Bajas,80,28,0,,35.0
+madrid,Estrella,39,15,0,,38.46
+madrid,Pilar,78,48,0,,61.54
+madrid,Vinateros,41,3,0,,7.32
+madrid,Aeropuerto,10,3,0,,30.0
+madrid,Buenavista,65,12,0,,18.46
+madrid,Orcasur,66,44,0,,66.67
+madrid,Canillejas,103,47,0,,45.63
+madrid,Aravaca,42,28,0,,66.67
+madrid,Apostol Santiago,21,7,0,,33.33
+madrid,Aguilas,56,9,0,,16.07
+madrid,San Cristobal,25,4,0,,16.0
+madrid,El Goloso,14,10,0,,71.43
+madrid,Butarque,22,5,0,,22.73
+madrid,Portazgo,69,19,0,,27.54
+madrid,La Paz,24,9,0,,37.5
+madrid,Cuatro Vientos,9,3,0,,33.33
+madrid,Santa Eugenia,12,3,0,,25.0
+madrid,Corralejos,15,7,0,,46.67
+madrid,Orcasitas,31,12,0,,38.71
+madrid,Amposta,17,6,0,,35.29
+madrid,Entrevías,59,20,0,,33.9
+madrid,Pradolongo,68,24,0,,35.29
+madrid,Media Legua,27,5,0,,18.52
+madrid,Los Rosales,61,26,0,,42.62
+madrid,Hellín,28,5,0,,17.86
+madrid,Ambroz,17,3,0,,17.65
+madrid,El Pardo,4,4,0,,100.0
+madrid,Pavones,10,3,0,,30.0
+madrid,Horcajo,3,0,0,,0.0
+madrid,Fuentelareina,5,5,0,,100.0
+madrid,Atalaya,1,0,0,,0.0
+barcelona,la Sagrada Família,1168,826,0,,70.72
+barcelona,el Besòs i el Maresme,132,67,0,,50.76
+barcelona,el Camp d'en Grassot i Gràcia Nova,323,201,0,,62.23
+barcelona,el Barri Gòtic,1215,674,0,,55.47
+barcelona,la Barceloneta,506,407,0,,80.43
+barcelona,la Dreta de l'Eixample,2393,1528,0,,63.85
+barcelona,el Camp de l'Arpa del Clot,336,216,0,,64.29
+barcelona,Vallcarca i els Penitents,88,46,0,,52.27
+barcelona,el Raval,1583,765,0,,48.33
+barcelona,el Poblenou,478,351,0,,73.43
+barcelona,el Clot,116,55,0,,47.41
+barcelona,el Poble Sec,891,586,0,,65.77
+barcelona,Sant Antoni,989,619,0,,62.59
+barcelona,"Sant Pere, Santa Caterina i la Ribera",1182,766,0,,64.81
+barcelona,Sants,351,205,0,,58.4
+barcelona,Pedralbes,33,18,0,,54.55
+barcelona,el Guinardó,145,64,0,,44.14
+barcelona,l'Antiga Esquerra de l'Eixample,1088,686,0,,63.05
+barcelona,la Vila de Gràcia,1133,756,0,,66.73
+barcelona,Diagonal Mar i el Front Marítim del Poblenou,177,142,0,,80.23
+barcelona,el Fort Pienc,510,321,0,,62.94
+barcelona,Sant Martí de Provençals,72,22,0,,30.56
+barcelona,Navas,77,26,0,,33.77
+barcelona,la Nova Esquerra de l'Eixample,807,459,0,,56.88
+barcelona,Sarrià,89,61,0,,68.54
+barcelona,el Coll,35,24,0,,68.57
+barcelona,el Parc i la Llacuna del Poblenou,199,137,0,,68.84
+barcelona,la Vila Olímpica del Poblenou,131,102,0,,77.86
+barcelona,les Corts,266,196,0,,73.68
+barcelona,el Putxet i el Farró,264,168,0,,63.64
+barcelona,Sant Gervasi - Galvany,560,357,0,,63.75
+barcelona,Sants - Badal,212,123,0,,58.02
+barcelona,el Congrés i els Indians,55,18,0,,32.73
+barcelona,Hostafrancs,221,144,0,,65.16
+barcelona,la Maternitat i Sant Ramon,96,55,0,,57.29
+barcelona,el Baix Guinardó,158,85,0,,53.8
+barcelona,la Bordeta,93,38,0,,40.86
+barcelona,la Prosperitat,28,7,0,,25.0
+barcelona,el Turó de la Peira,24,4,0,,16.67
+barcelona,Provençals del Poblenou,106,60,0,,56.6
+barcelona,la Font d'en Fargues,15,7,0,,46.67
+barcelona,la Trinitat Vella,10,3,0,,30.0
+barcelona,la Font de la Guatlla,123,58,0,,47.15
+barcelona,Sant Gervasi - la Bonanova,96,48,0,,50.0
+barcelona,les Tres Torres,51,31,0,,60.78
+barcelona,"Vallvidrera, el Tibidabo i les Planes",38,17,0,,44.74
+barcelona,la Teixonera,19,6,0,,31.58
+barcelona,Can Baró,45,25,0,,55.56
+barcelona,el Carmel,93,50,0,,53.76
+barcelona,la Salut,74,42,0,,56.76
+barcelona,la Marina del Prat Vermell,13,6,0,,46.15
+barcelona,la Verneda i la Pau,52,13,0,,25.0
+barcelona,la Marina de Port,71,9,0,,12.68
+barcelona,Porta,35,13,0,,37.14
+barcelona,Vilapicina i la Torre Llobeta,64,21,0,,32.81
+barcelona,Sant Andreu,83,41,0,,49.4
+barcelona,la Sagrera,68,35,0,,51.47
+barcelona,Verdun,15,4,0,,26.67
+barcelona,el Bon Pastor,12,5,0,,41.67
+barcelona,Horta,25,6,0,,24.0
+barcelona,la Guineueta,13,2,0,,15.38
+barcelona,la Vall d'Hebron,9,3,0,,33.33
+barcelona,les Roquetes,22,9,0,,40.91
+barcelona,Sant Genís dels Agudells,14,8,0,,57.14
+barcelona,Can Peguera,3,0,0,,0.0
+barcelona,Torre Baró,2,1,0,,50.0
+barcelona,Montbau,13,5,0,,38.46
+barcelona,la Trinitat Nova,5,0,0,,0.0
+barcelona,la Clota,5,4,0,,80.0
+barcelona,Canyelles,1,1,0,,100.0
+barcelona,Baró de Viver,3,0,0,,0.0
+mallorca,Palma de Mallorca,1493,988,0,,66.18
+mallorca,Sant Llorenç des Cardassar,285,260,0,,91.23
+mallorca,Banyalbufar,64,52,0,,81.25
+mallorca,Manacor,778,725,0,,93.19
+mallorca,Alcúdia,1632,1589,0,,97.37
+mallorca,Pollença,2731,2697,0,,98.76
+mallorca,Selva,276,242,0,,87.68
+mallorca,Campos,528,524,0,,99.24
+mallorca,Llucmajor,611,519,0,,84.94
+mallorca,Santa Margalida,648,633,0,,97.69
+mallorca,Santanyí,1049,992,0,,94.57
+mallorca,Felanitx,628,613,0,,97.61
+mallorca,Llubí,94,87,0,,92.55
+mallorca,Esporles,60,43,0,,71.67
+mallorca,Muro,369,362,0,,98.1
+mallorca,Lloret de Vistalegre,41,39,0,,95.12
+mallorca,Ariany,81,79,0,,97.53
+mallorca,Sóller,489,449,0,,91.82
+mallorca,Calvià,490,435,0,,88.78
+mallorca,Lloseta,59,54,0,,91.53
+mallorca,Fornalutx,90,83,0,,92.22
+mallorca,Artà,369,353,0,,95.66
+mallorca,Son Servera,263,253,0,,96.2
+mallorca,Andratx,212,200,0,,94.34
+mallorca,Santa Eugènia,13,12,0,,92.31
+mallorca,Valldemossa,88,81,0,,92.05
+mallorca,Ses Salines,227,215,0,,94.71
+mallorca,Capdepera,482,455,0,,94.4
+mallorca,Inca,225,204,0,,90.67
+mallorca,Campanet,156,140,0,,89.74
+mallorca,Búger,158,153,0,,96.84
+mallorca,Porreres,88,80,0,,90.91
+mallorca,Montuïri,50,42,0,,84.0
+mallorca,Alaró,98,78,0,,79.59
+mallorca,Escorca,23,18,0,,78.26
+mallorca,Mancor de la Vall,44,43,0,,97.73
+mallorca,Petra,149,133,0,,89.26
+mallorca,Sa Pobla,277,264,0,,95.31
+mallorca,Algaida,99,92,0,,92.93
+mallorca,Binissalem,90,86,0,,95.56
+mallorca,Bunyola,70,67,0,,95.71
+mallorca,Deyá,87,85,0,,97.7
+mallorca,Santa María del Camí,46,38,0,,82.61
+mallorca,Sineu,83,77,0,,92.77
+mallorca,Consell,17,15,0,,88.24
+mallorca,Puigpunyent,40,32,0,,80.0
+mallorca,Sencelles,110,108,0,,98.18
+mallorca,Costitx,53,50,0,,94.34
+mallorca,Vilafranc de Bonany,47,46,0,,97.87
+mallorca,Estellencs,22,15,0,,68.18
+mallorca,Marratxí,105,92,0,,87.62
+mallorca,Maria de la Salut,71,61,0,,85.92
+mallorca,Sant Joan,46,38,0,,82.61
