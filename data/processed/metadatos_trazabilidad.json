@@ -1,0 +1,21 @@
+{
+  "fecha_generacion": "2025-06-28 06:53:48",
+  "total_fuentes_oficiales": 4,
+  "ciudades_analizadas": [
+    "Madrid",
+    "Barcelona",
+    "Mallorca"
+  ],
+  "tipos_validacion": [
+    "Verificación de coordenadas geográficas",
+    "Validación de rangos de precios realistas",
+    "Comprobación de IDs únicos",
+    "Contrastado contra fuentes primarias"
+  ],
+  "garantias_calidad": [
+    "Sin estimaciones no documentadas",
+    "Sin datos sintéticos o simulados",
+    "Sin factores de conversión inventados",
+    "Trazabilidad completa hasta fuente original"
+  ]
+}

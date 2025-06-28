@@ -1220,7 +1220,7 @@ def main():
         st.markdown("### 🗺️ Mapa Coroplético Interactivo - Saturación por Barrios")
         fig_coropletico = crear_mapa_coropletico(df_map, ciudad_seleccionada)
         if fig_coropletico:
-            st.plotly_chart(fig_coropletico, use_container_width=True)
+            st.plotly_chart(fig_coropletico, use_container_width=True, key="fig_coropletico_main")
         else:
             st.info("💡 Los mapas coropléticos requieren archivos GeoJSON para la visualización territorial")
 
