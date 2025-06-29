@@ -1,7 +1,7 @@
 REPORTE FINAL - DATA ENGINEER
 ==================================================
 
-Fecha: 2025-06-26 18:32
+Fecha: 2025-06-28 06:53
 Ciudades procesadas: 3
 Total listings: 61,114
 Barrios procesados: 252

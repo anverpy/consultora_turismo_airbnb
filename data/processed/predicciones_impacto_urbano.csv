@@ -1,0 +1,4 @@
+ciudad,valor_actual,pred_mantenimiento,pred_crecimiento_20pct,pred_regulacion_30pct,cambio_crecimiento,cambio_regulacion,modelo_entrenado,variables_usadas
+madrid,15.4,17.31,17.31,19.56,0.0,2.25,RandomForest_datos_reales,"total_listings, densidad_listings_km2, densidad_listings_1000hab, ratio_entire_home_pct, poblacion_total"
+barcelona,23.7,23.21,21.63,23.39,-1.58,0.17,RandomForest_datos_reales,"total_listings, densidad_listings_km2, densidad_listings_1000hab, ratio_entire_home_pct, poblacion_total"
+mallorca,30.0,25.65,25.15,24.98,-0.5,-0.67,RandomForest_datos_reales,"total_listings, densidad_listings_km2, densidad_listings_1000hab, ratio_entire_home_pct, poblacion_total"
