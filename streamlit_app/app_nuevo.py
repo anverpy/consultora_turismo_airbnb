@@ -2625,9 +2625,9 @@ def mostrar_ratio_turistico(datasets, geodatos, ciudad_seleccionada):
                         st.markdown(f"""
                         **Métrica mostrada**: {col_ratio.replace('_', ' ').title()}
                         
-                        **🟢 Verde**: Valores bajos
-                        **🟡 Amarillo**: Valores medios  
-                        **🔴 Rojo**: Valores altos
+                        **🟡 Amarillo**: Valores altos
+                        **🟢 Verde**: Valores medios
+                        **🟣 Morados*: Valores bajos
                         
                         **🎯 Interpretación**: 
                         - Intensidad del color = Nivel del indicador
