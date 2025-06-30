@@ -2,13 +2,12 @@
 
 <div align="center">
 
-![Python](https://img.shields.io/badge/Python-3.9+-blue?style=for-the-badge&logo=python)
-![Stre### 🔗 **Enlaces Importantes**
+![Python] ![Streamlit] 
+🔗 **Enlaces Importantes**
 - 🛠️ **Guía técnica:** `/docs/technical_guide.md`
 - 📊 **Manual de KPIs:** `/docs/kpis_methodology.md`
 - 🖥️ **Manual dashboard:** `/docs/dashboard_manual.md`
-- 🎯 **Guión presentación:** `/docs/presentation_script.md`
-- 📊 **Slides presentación:** `/docs/presentation_slides.md`t](https://img.shields.io/badge/Streamlit-1.29.0-red?style=for-the-badge&logo=streamlit)
+
 ![Status](https://img.shields.io/badge/Status-Complete-green?style=for-the-badge)
 
 ### 📊 Análisis del Impacto Urbano de Airbnb en España
@@ -17,7 +16,7 @@
 ---
 
 **🎯 Proyecto desarrollado por el equipo de Consultores en Turismo Sostenible**  
-*Evaluando el impacto urbano de Airbnb y proponiendo regulaciones sostenibles*
+*Evaluando el impacto urbano de Airbnb y proponiendo regulaciones sostenibles.*
 
 </div>
 
@@ -33,6 +32,7 @@
 - 🏘️ **Densidad por barrio:** Alojamientos Airbnb por km² o por 1.000 habitantes
 - ⚖️ **Ratio turístico/residencial:** % de viviendas dedicadas a Airbnb vs. residenciales
 - 🚨 **Saturación territorial:** Capacidad turística vs. población/área local
+- 💸 **Análisis económico:** Impacto económico del turismo en las ciudades analizadas. 
 
 ---
 
@@ -40,9 +40,9 @@
 
 | 🌆 **Ciudad** | 📊 **Características** | 🎯 **Enfoque** |
 |---|---|---|
-| **🏛️ Madrid** | Capital, centro urbano, alta densidad | Regulación urbana integral |
-| **🏖️ Barcelona** | Ciudad costera, turismo cultural/playa | Gestión saturación histórica |
-| **🏝️ Mallorca** | Territorio insular, estacionalidad extrema | Sostenibilidad insular |
+| **🏛️ Madrid** | Capital, centro urbano, alta densidad | Regulación urbana moderada |
+| **🏖️ Barcelona** | Ciudad costera, turismo cultural/playa | Prohibición alquiler vacacional en 2028 |
+| **🏝️ Mallorca** | Territorio insular, estacionalidad extrema | Paralización nuevas licencias |
 
 ---
 
@@ -93,22 +93,21 @@ consultores_turismo_airbnb/
 
 ## 📊 **DATASETS Y FUENTES DE DATOS**
 
-### 🏛️ **Dataset Principal: listings_madrid_new.csv**
+### 🏛️ **Dataset Principal: listings_unificado.csv**
 
-Nuestro dataset consolidado de **25 columnas** que combina datos de Inside Airbnb con análisis temporal avanzado:
+Nuestro dataset consolidado combina datos de Inside Airbnb con datos externos del Instituto de Estadística, los Censos de cada ciudad y un análisis temporal avanzado:
 
 #### **🔍 CARACTERÍSTICAS PRINCIPALES**
 - **Precio consolidado** → `price_market` que combina precios base + datos de calendar
-- **Métricas temporales** → Disponibilidad y precios por estación y fin de semana
+- **Métricas económicas** → Disponibilidad y precios
 - **Intensidad turística** → Score 0-100 que evalúa la presión turística por alojamiento
-- **Datos de regulación** → Licencias oficiales y políticas de cada propiedad
+- **Datos de regulación** → Licencias oficiales y políticas
 
 #### **📈 PRINCIPALES MÉTRICAS CALCULADAS**
-- `tourism_intensity` - Score de intensidad turística (0-100)
-- `availability_rate_calendar` - Tasa real de disponibilidad
-- `summer_premium` - Premium estacional de verano
-- `price_volatility` - Volatilidad de precios temporal
-- `seasonal_ratio` - Ratio estacional verano/invierno
+- `ubicación` - Localización de alojamientos para el estudio de la saturación turística por ciudad. 
+- `Neighbourhood` - Clasificación de la saturación turística por ciudad para análisis del comportamiento de los huéspedes.
+- `precio` - Estudio del precio medio por ciudad y barrio para profundizar en el conocimiento de cada ciudad. 
+- `availability` - Comprobación de la disponibilidad de alojamientos para conocer la concentración turística. 
 
 ### 🗃️ **Fuentes de Datos Integradas**
 - **Inside Airbnb:** Listings base + 9.2M registros de calendar
@@ -138,13 +137,13 @@ pip install -r requirements.txt
 
 ```bash
 # Ejecutar notebooks en orden:
-# 1. Data Engineer (Persona A)
+# 1. Data Engineer 
 jupyter notebook notebooks/persona_a_data_engineer.ipynb
 
-# 2. Data Analyst (Persona B) 
+# 2. Data Analyst
 jupyter notebook notebooks/persona_b_data_analyst.ipynb
 
-# 3. Business Intelligence (Persona C)
+# 3. Business Intelligence
 jupyter notebook notebooks/persona_c_business_intelligence.ipynb
 ```
 
@@ -152,13 +151,13 @@ jupyter notebook notebooks/persona_c_business_intelligence.ipynb
 
 ```bash
 # Ejecutar aplicación Streamlit (versión optimizada)
-streamlit run streamlit_app/app.py
+streamlit run streamlit_app/nuevo_app.py
 
 # El dashboard incluye nuevas funcionalidades:
 # - Análisis temporal avanzado
 # - Métricas de intensidad turística
-# - Integración con base de datos SQLite
 # - Performance mejorado para datasets grandes
+# - Conclusiones y recomendaciones
 ```
 
 ---
@@ -173,7 +172,7 @@ streamlit run streamlit_app/app.py
 ### 🏖️ **Barcelona**
 - **Situación:** Moratoria existente validada con nuestras métricas
 - **Ciutat Vella:** Saturación crítica confirmada
-- **Recomendación:** Mantener y refinar regulación actual
+- **Recomendación:** Reestablecer alquileres vacacionales controlados tras la desaturación por prohibición.
 
 ### 🏝️ **Mallorca**
 - **Características:** Estacionalidad extrema, presión costera
@@ -222,23 +221,11 @@ streamlit run streamlit_app/app.py
 
 ---
 
-## 🎤 **PRESENTACIONES EJECUTIVAS**
+## 🎤 **FUNCIONALIDAD DEL ESTUDIO**
 
 ### 📊 **Material para Gobiernos Locales**
 
 Hemos desarrollado un **paquete completo de presentación ejecutiva** diseñado específicamente para consultores que presenten este análisis ante autoridades municipales y regionales.
-
-#### 🎯 **Guión de Presentación (20 minutos)**
-- **Archivo:** `/docs/presentation_script.md`
-- **Estructura:** Introducción → Metodología → Resultados → Recomendaciones → Herramientas
-- **Enfoque:** Consultor profesional con autoridad técnica
-- **Incluye:** Material Q&A, gestión de objeciones, propuesta comercial
-
-#### 📊 **Slides Detalladas (18 slides)**
-- **Archivo:** `/docs/presentation_slides.md`
-- **Contenido:** Especificaciones técnicas de cada slide
-- **Visuales:** Mapas coropléticos, gráficos evolución, comparativas UE
-- **Timing:** 1-2 minutos por slide con transiciones fluidas
 
 #### 🎭 **Casos de Uso**
 - **Ayuntamientos:** Presentación a alcaldes y concejales de turismo
@@ -250,17 +237,17 @@ Hemos desarrollado un **paquete completo de presentación ejecutiva** diseñado 
 
 ## 👥 **EQUIPO DE DESARROLLO**
 
-### 🔧 **Persona A - Data Engineer**
+### 🔧 **Data Engineer**
 - **Responsabilidad:** Extracción, limpieza y procesamiento de datos
 - **Notebook:** `notebooks/persona_a_data_engineer.ipynb`
 - **Entregables:** Datasets limpios y pipeline ETL
 
-### 📊 **Persona B - Data Analyst**
+### 📊 **Data Analyst**
 - **Responsabilidad:** Análisis estadístico y cálculo de KPIs
 - **Notebook:** `notebooks/persona_b_data_analyst.ipynb`
 - **Entregables:** Métricas validadas y correlaciones
 
-### 💼 **Persona C - Business Intelligence**
+### 💼 **Business Intelligence**
 - **Responsabilidad:** Visualizaciones e insights de negocio
 - **Notebook:** `notebooks/persona_c_business_intelligence.ipynb`
 - **Entregables:** Dashboard y presentación ejecutiva
@@ -273,8 +260,6 @@ Hemos desarrollado un **paquete completo de presentación ejecutiva** diseñado 
 - 🛠️ **Guía técnica:** `/docs/technical_guide.md`
 - 📊 **Manual de KPIs:** `/docs/kpis_methodology.md`
 - 🖥️ **Manual dashboard:** `/docs/dashboard_manual.md`
-- 🎯 **Guión presentación:** `/docs/presentation_script.md`
-- 📊 **Slides presentación:** `/docs/presentation_slides.md`
 
 ### 📋 **Fuentes de Datos y Referencias Bibliográficas**
 
@@ -379,30 +364,12 @@ Todos los datos han sido procesados siguiendo estándares de calidad científica
 
 ---
 
-## 🏆 **IMPACTO Y RESULTADOS**
-
-### 📈 **Métricas de Éxito**
-- ✅ **3 ciudades analizadas** con metodología unificada
-- ✅ **25+ métricas calculadas** incluyendo análisis temporal avanzado  
-- ✅ **Dashboard interactivo** con performance optimizado y nuevas funcionalidades
-- ✅ **Recomendaciones específicas** por zona y ciudad basadas en tourism_intensity
-- ✅ **Sistema de alertas** automatizado con umbrales dinámicos
-- ✅ **Dataset consolidado** listings_madrid_new.csv con 9.2M registros procesados
-- ✅ **Base de datos integrada** SQLite para consultas optimizadas
-
-### 🎯 **Aplicabilidad**
-- 🏛️ **Gobiernos locales:** Herramientas de regulación basadas en datos
-- 📊 **Investigadores:** Metodología replicable para otras ciudades
-- 🏢 **Sector turístico:** Insights para desarrollo sostenible
-
----
-
 ## 🆕 **ÚLTIMAS ACTUALIZACIONES**
 
 ### 📅 **Junio 2025 - Versión Consolidada**
 
 #### **🔄 Mejoras en Procesamiento de Datos**
-- ✅ **Nuevo dataset consolidado:** `listings_madrid_new.csv` (25 columnas)
+- ✅ **Nuevo dataset consolidado:** `listings_unificado.csv`
 - ✅ **Integración calendar data:** Procesados 9.2M registros de disponibilidad
 - ✅ **Métricas avanzadas:** Tourism intensity, volatilidad, premiums estacionales
 - ✅ **Base de datos optimizada:** SQLite integrada para consultas rápidas
@@ -426,10 +393,7 @@ Todos los datos han sido procesados siguiendo estándares de calidad científica
 ## 📞 **CONTACTO**
 
 ### 👥 **Equipo de Consultores en Turismo Sostenible**
-- 📧 **Email:** consultores@turismo-sostenible.es
-- 🌐 **Web:** www.turismo-sostenible.es
-- 📱 **LinkedIn:** /company/consultores-turismo-sostenible
-- 🐙 **GitHub:** /consultores-turismo/airbnb-analysis
+- 🐙 **GitHub:** [/consultores-turismo/airbnb-analysis](https://github.com/AlfonsoCifuentes/consultora_turismo_airbnb/tree/main)
 
 ---
 
@@ -439,9 +403,7 @@ Todos los datos han sido procesados siguiendo estándares de calidad científica
 
 **Contribuyendo al desarrollo urbano equilibrado y sostenible**
 
-[![Streamlit](https://img.shields.io/badge/Demo-Streamlit-red?style=for-the-badge)](https://airbnb-analysis.streamlit.app)
-[![GitHub](https://img.shields.io/badge/Code-GitHub-black?style=for-the-badge)](https://github.com/consultores-turismo/airbnb-analysis)
-[![Documentation](https://img.shields.io/badge/Docs-GitBook-blue?style=for-the-badge)](#)
+[![Streamlit](enlace deploy)
 
 ---
 
