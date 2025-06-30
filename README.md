@@ -2,7 +2,8 @@
 
 <div align="center">
 
-![Python] ![Streamlit] 
+![Python](https://img.shields.io/badge/Python-3.9%2B-blue?style=for-the-badge&logo=python&logoColor=white)
+![Streamlit](https://img.shields.io/badge/Streamlit-Optimizado-ff4b4b?style=for-the-badge&logo=streamlit&logoColor=white)
 🔗 **Enlaces Importantes**
 - 🛠️ **Guía técnica:** `/docs/technical_guide.md`
 - 📊 **Manual de KPIs:** `/docs/kpis_methodology.md`
