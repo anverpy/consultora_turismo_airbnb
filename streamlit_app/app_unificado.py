@@ -3355,12 +3355,11 @@ def mostrar_alertas_saturacion(datasets, geodatos, ciudad_seleccionada, mostrar_
     col1, col2 = st.columns(2)
     
     with col1:
-        st.markdown("📊 **Umbral de Concentración**")
-        st.info("Se usa el percentil 90 de concentración como referencia automática")
+        umbral_densidad = st.slider("🏠 Umbral Densidad (listings/km²)", 0, 200, 100, 5)
     
     with col2:
-        umbral_ratio = st.slider("📈 Umbral Ratio Turístico (%)", 0.0, 100.0, umbral_saturacion, 5.0,
-                                help="Porcentaje de viviendas turísticas que consideramos problemático")
+        umbral_ratio = st.slider("📈 Umbral Ratio Turístico", 0.0, 1.0, 0.3, 0.05,
+                                help="Proporción de viviendas turísticas que consideramos problemática")
     
     # Análisis de saturación
     if 'kpis_barrio' in datasets and not datasets['kpis_barrio'].empty:
@@ -3401,14 +3400,23 @@ def mostrar_alertas_saturacion(datasets, geodatos, ciudad_seleccionada, mostrar_
                 for i, barrio in enumerate(barrios_criticos[:10], 1):
                     barrio_data = df_ciudad[df_ciudad['barrio'] == barrio].iloc[0]
                     
-                    total_listings = barrio_data.get('total_listings', 'N/A')
-                    ratio_entire_home = barrio_data.get('ratio_entire_home_pct', barrio_data.get('ratio_entire_home', 'N/A'))
-                    precio_medio = barrio_data.get('precio_medio', 'N/A')
+                    # Obtener valores asegurando tipos correctos
+                    total_listings = barrio_data.get('total_listings', 0)
+                    if pd.isna(total_listings) or total_listings == 'N/A':
+                        total_listings = 0
+                    
+                    ratio_entire_home = barrio_data.get('ratio_entire_home_pct', barrio_data.get('ratio_entire_home', 0))
+                    if pd.isna(ratio_entire_home) or ratio_entire_home == 'N/A':
+                        ratio_entire_home = 0
+                    
+                    precio_medio = barrio_data.get('precio_medio', 0)
+                    if pd.isna(precio_medio) or precio_medio == 'N/A':
+                        precio_medio = 0
                     
                     st.write(f"🔴 **{i}. {barrio}**")
-                    st.write(f"   • Alojamientos: {total_listings if total_listings != 'N/A' else 'N/A'}")
-                    st.write(f"   • Ratio turístico: {ratio_entire_home:.1f if ratio_entire_home != 'N/A' else 'N/A'}%")
-                    st.write(f"   • Precio medio: €{precio_medio:.0f if precio_medio != 'N/A' else 'N/A'}/noche")
+                    st.write(f"   • Alojamientos: {total_listings:,}")
+                    st.write(f"   • Ratio turístico: {ratio_entire_home:.1f}%")
+                    st.write(f"   • Precio medio: €{precio_medio:.0f}/noche")
             else:
                 st.markdown("""
                 <div class="alert-success">
@@ -3994,7 +4002,7 @@ def main():
         
         # Información del proyecto actualizada
         st.markdown("---")
-        st.markdown("### � Situación Actual del Turismo")
+        st.markdown("### 📋 Situación Actual del Turismo")
         st.markdown("""
         **🏛️ Madrid**: El ayuntamiento ha limitado los pisos turísticos en el centro histórico (2024)
         
@@ -4004,7 +4012,7 @@ def main():
         """)
         
         # Estado del sistema con información actualizada
-        st.markdown("### � Sobre los Datos")
+        st.markdown("### 📊 Sobre los Datos")
         st.success("✅ Información oficial y verificada")
         st.info("📅 Actualizado: 2024-2025")
         st.markdown("""
