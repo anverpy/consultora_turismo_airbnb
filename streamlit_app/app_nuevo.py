@@ -4209,7 +4209,7 @@ def main():
     <strong>💡 Guía rápida:</strong> 
     <strong>Resumen General</strong> = Panorámica completa | 
     <strong>Mapa por Barrios</strong> = Dónde se concentra el turismo | 
-    <strong>¿Cuánto Turismo hay?</strong> = Proporción turismo/residentes | 
+    <strong>Ratio turístico</strong> = Proporción turismo/residentes | 
     <strong>Zonas Problemáticas</strong> = Barrios saturados | 
     <strong>Qué se puede hacer</strong> = Soluciones y propuestas | 
     <strong>Impacto Económico</strong> = Beneficios y costes
@@ -4220,9 +4220,9 @@ def main():
     tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
         "📊 Resumen General", 
         "🏘️ Mapa por Barrios", 
-        "📈 ¿Cuánto Turismo hay?", 
+        "📈 Ratio Turístico", 
         "⚠️ Zonas Problemáticas",
-        "💡 Qué se puede hacer",
+        "💡 Recomendaciones",
         "💰 Impacto Económico"
     ])
     
