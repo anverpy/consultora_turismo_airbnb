@@ -493,26 +493,41 @@ def cargar_datasets_verificados():
         # Cargar el dataset principal
         df_principal = pd.read_csv(data_path)
         
-        # Limpiar y procesar datos siguiendo la metodología de app_+precio.py
-        df_principal = df_principal.dropna(subset=['ciudad', 'neighbourhood_cleansed'])
+        # Limpiar y procesar datos siguiendo la metodología original
+        
+        # Convertir precios a numérico
         df_principal['price'] = pd.to_numeric(df_principal['price'], errors='coerce')
+        
+        # Aplicar filtros de limpieza estrictos como el original
+        # 1. Eliminar filas sin ciudad o barrio
+        df_principal = df_principal.dropna(subset=['ciudad', 'neighbourhood_cleansed'])
+        
+        # 2. Eliminar filas sin precio válido
         df_principal = df_principal.dropna(subset=['price'])
+        
+        # 3. Eliminar precios <= 0
         df_principal = df_principal[df_principal['price'] > 0]
+        
+        # 4. Filtrar precios extremos (>=6501)
+        df_principal = df_principal[df_principal['price'] < 6501]
         
         # Crear estructura de datasets compatible con app_nuevo.py
         datasets = {}
         
         # 1. Crear kpis_ciudad calculados en tiempo real
         kpis_ciudad = []
-        for ciudad in df_principal['ciudad'].unique():
+        for ciudad in df_principal['ciudad'].dropna().unique():
             df_ciudad = df_principal[df_principal['ciudad'] == ciudad]
             
             total_listings = len(df_ciudad)
             entire_home_count = len(df_ciudad[df_ciudad['room_type'] == 'Entire home/apt'])
             ratio_entire_home = (entire_home_count / total_listings * 100) if total_listings > 0 else 0
-            precio_medio = df_ciudad['price'].mean()
-            disponibilidad_media = df_ciudad['availability_365'].mean() if 'availability_365' in df_ciudad.columns else 200
-            ocupacion_estimada = max(0, 100 - (disponibilidad_media / 365 * 100))
+            
+            # Calcular precio medio manejando NaN
+            precio_medio = df_ciudad['price'].dropna().mean() if not df_ciudad['price'].dropna().empty else 0
+            
+            disponibilidad_media = df_ciudad['availability_365'].dropna().mean() if 'availability_365' in df_ciudad.columns and not df_ciudad['availability_365'].dropna().empty else 200
+            ocupacion_estimada = max(0, 100 - (disponibilidad_media / 365 * 100)) if disponibilidad_media > 0 else 0
             
             kpis_ciudad.append({
                 'ciudad': ciudad.lower(),
@@ -522,25 +537,28 @@ def cargar_datasets_verificados():
                 'ratio_entire_home': ratio_entire_home,
                 'ocupacion_estimada': ocupacion_estimada,
                 'entire_home_count': entire_home_count,
-                'barrios_count': df_ciudad['neighbourhood_cleansed'].nunique()
+                'barrios_count': df_ciudad['neighbourhood_cleansed'].dropna().nunique()
             })
         
         datasets['kpis_ciudad'] = pd.DataFrame(kpis_ciudad)
         
         # 2. Crear kpis_barrio calculados en tiempo real
         kpis_barrio = []
-        for ciudad in df_principal['ciudad'].unique():
+        for ciudad in df_principal['ciudad'].dropna().unique():
             df_ciudad = df_principal[df_principal['ciudad'] == ciudad]
             
-            for barrio in df_ciudad['neighbourhood_cleansed'].unique():
+            for barrio in df_ciudad['neighbourhood_cleansed'].dropna().unique():
                 df_barrio = df_ciudad[df_ciudad['neighbourhood_cleansed'] == barrio]
                 
                 if len(df_barrio) > 0:
                     total_listings = len(df_barrio)
                     entire_home_count = len(df_barrio[df_barrio['room_type'] == 'Entire home/apt'])
                     ratio_entire_home = (entire_home_count / total_listings * 100) if total_listings > 0 else 0
-                    precio_medio = df_barrio['price'].mean()
-                    disponibilidad_media = df_barrio['availability_365'].mean() if 'availability_365' in df_barrio.columns else 200
+                    
+                    # Calcular precio medio manejando NaN
+                    precio_medio = df_barrio['price'].dropna().mean() if not df_barrio['price'].dropna().empty else 0
+                    
+                    disponibilidad_media = df_barrio['availability_365'].dropna().mean() if 'availability_365' in df_barrio.columns and not df_barrio['availability_365'].dropna().empty else 200
                     
                     kpis_barrio.append({
                         'ciudad': ciudad.lower(),
@@ -553,8 +571,8 @@ def cargar_datasets_verificados():
                         'precio_medio_euros': precio_medio,  # Alias para compatibilidad
                         'price': precio_medio,  # Alias para compatibilidad
                         'disponibilidad_media': disponibilidad_media,
-                        'lat_mean': df_barrio['latitude'].mean() if 'latitude' in df_barrio.columns else 0,
-                        'lon_mean': df_barrio['longitude'].mean() if 'longitude' in df_barrio.columns else 0
+                        'lat_mean': df_barrio['latitude'].dropna().mean() if 'latitude' in df_barrio.columns and not df_barrio['latitude'].dropna().empty else 0,
+                        'lon_mean': df_barrio['longitude'].dropna().mean() if 'longitude' in df_barrio.columns and not df_barrio['longitude'].dropna().empty else 0
                     })
         
         datasets['kpis_barrio'] = pd.DataFrame(kpis_barrio)
@@ -1495,47 +1513,6 @@ def mostrar_vision_general(datasets, metricas, geodatos, ciudad_seleccionada):
                     delta="Estimación anual",
                     help="Impacto económico total estimado del sector - incluye gasto directo e indirecto"
                 )
-        
-        # Debug: Mostrar información sobre disponibilidad de datos
-        if st.sidebar.checkbox("🔍 Mostrar información de debug de datos", value=False):
-            st.markdown("### 🔍 Información de Debug de Datos")
-            
-            if 'kpis_barrio' in datasets and not datasets['kpis_barrio'].empty:
-                df_debug = datasets['kpis_barrio']
-                st.markdown("**📊 Dataset kpis_barrio:**")
-                st.markdown(f"- Filas: {len(df_debug)}")
-                st.markdown(f"- Columnas: {list(df_debug.columns)}")
-                
-                # Mostrar estadísticas de columnas clave
-                col_debug1, col_debug2 = st.columns(2)
-                
-                with col_debug1:
-                    if 'total_listings' in df_debug.columns:
-                        st.markdown(f"**total_listings**: min={df_debug['total_listings'].min()}, max={df_debug['total_listings'].max()}, sum={df_debug['total_listings'].sum()}")
-                    
-                    precio_cols = ['price', 'precio_medio', 'precio_medio_euros', 'average_price']
-                    for col in precio_cols:
-                        if col in df_debug.columns:
-                            valores_validos = df_debug[col].dropna()
-                            if len(valores_validos) > 0:
-                                st.markdown(f"**{col}**: valores válidos={len(valores_validos)}, promedio={valores_validos.mean():.2f}")
-                            else:
-                                st.markdown(f"**{col}**: Sin valores válidos")
-                
-                with col_debug2:
-                    ciudades = df_debug['ciudad'].unique() if 'ciudad' in df_debug.columns else []
-                    st.markdown(f"**Ciudades disponibles**: {list(ciudades)}")
-                    
-                    if 'ciudad' in df_debug.columns:
-                        for ciudad in ciudades:
-                            df_ciudad = df_debug[df_debug['ciudad'] == ciudad]
-                            st.markdown(f"- {ciudad}: {len(df_ciudad)} barrios")
-            
-            if 'kpis_ciudad' in datasets and not datasets['kpis_ciudad'].empty:
-                df_ciudad_debug = datasets['kpis_ciudad']
-                st.markdown("**🏙️ Dataset kpis_ciudad:**")
-                st.markdown(f"- Filas: {len(df_ciudad_debug)}")
-                st.markdown(f"- Columnas: {list(df_ciudad_debug.columns)}")
     
     else:
         st.warning("⚠️ No hay datos disponibles para mostrar métricas consolidadas")
@@ -4000,6 +3977,8 @@ def main():
             help="Ajusta este porcentaje para definir cuándo consideras que un barrio tiene demasiados pisos turísticos respecto a viviendas normales"
         )
         
+
+        
         # Información del proyecto actualizada
         st.markdown("---")
         st.markdown("### 📋 Situación Actual del Turismo")
@@ -4015,13 +3994,6 @@ def main():
         st.markdown("### 📊 Sobre los Datos")
         st.success("✅ Información oficial y verificada")
         st.info("📅 Actualizado: 2024-2025")
-        st.markdown("""
-        <div style="background-color: rgba(255, 140, 0, 0.1); border-left: 3px solid #ff8c00; padding: 8px; margin: 10px 0; border-radius: 3px;">
-        <p style="margin: 0; font-size: 0.8rem; color: #fafafa;">
-        ⚠️ Solo usamos datos oficiales. No hacemos estimaciones ni inventamos números.
-        </p>
-        </div>
-        """, unsafe_allow_html=True)
     
     # Cargar todos los datasets con validación usando placeholder dinámico
     loading_placeholder = st.empty()
@@ -4032,7 +4004,6 @@ def main():
     <p style="margin: 0; font-size: 0.9rem; line-height: 1.4;">
     ⏳ <strong>Estamos preparando los datos oficiales</strong> de Madrid, Barcelona y Mallorca para ti. 
     Esto incluye información verificada sobre alojamientos turísticos, precios, y normativa vigente.
-    </p>
     </div>
     """, unsafe_allow_html=True)
     
@@ -4075,7 +4046,7 @@ def main():
     Esta herramienta analiza <strong>datos reales de alojamientos turísticos</strong> (extraídos de plataformas como Airbnb) 
     para entender el impacto del turismo de corta duración en <strong>Madrid, Barcelona y Mallorca</strong>.
     </p>
-    <p style="margin: 0; font-size: 0.95rem; line-height: 1.5; color: #555;">
+    <p style="margin: 0; font-size: 0.95rem; line-height: 1.5;">
     🎯 <strong>¿Qué puedes hacer aquí?</strong> Explorar mapas de concentración real, analizar precios y ratios turísticos auténticos, 
     identificar barrios con alta saturación, y conocer el impacto económico basado en datos verificados.
     </p>
