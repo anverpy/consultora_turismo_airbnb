@@ -461,6 +461,16 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
+#Forzar color blanco en los valores numéricos de st.metric
+[data-testid="metric-container"] {
+    color: #ffffff !important;
+}
+
+[data-testid="metric-container"] > div:nth-child(2) {
+    color: #ffffff !important;
+    font-weight: 600;
+}
+
 @st.cache_data
 def cargar_datasets_verificados():
     """
