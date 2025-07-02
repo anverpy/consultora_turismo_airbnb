@@ -467,13 +467,24 @@ st.markdown("""
 [data-testid="metric-container"] {
     color: #ffffff !important;
 }
-
-[data-testid="metric-container"] > div:nth-child(2) {
+[data-testid="stMetricValue"] {
     color: #ffffff !important;
-    font-weight: 600;
+    font-weight: 600 !important;
 }
 </style>
 """, unsafe_allow_html=True)
+
+#Mejorar legibilidad del texto descriptivo en markdown
+st.markdown("""
+<style>
+.stMarkdown, .stMarkdown p, .stMarkdown li, .stMarkdown div, p, li {
+    color: #f2f2f2 !important;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+</style>
+""", unsafe_allow_html=True)
+
 
 @st.cache_data
 def cargar_datasets_verificados():
