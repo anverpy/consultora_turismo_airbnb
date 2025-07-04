@@ -1688,20 +1688,20 @@ def mostrar_vision_general(datasets, metricas, geodatos, ciudad_seleccionada):
     with col_coro2:
         st.markdown("**🌡️ Cómo leer la saturación:**")
         st.markdown("""
-        **🟢 Verde**: Saturación baja
+        **🟣 Morado**: Saturación baja
         - Pocos pisos turísticos 
         - La mayoría son viviendas normales
         - Impacto mínimo en vecinos
         
-        **🟡 Amarillo**: Saturación moderada  
+        **🔵 Azul**: Saturación moderada  
         - Equilibrio entre turismo y residentes
         - Situación controlada
         
-        **🟠 Naranja**: Saturación alta
+        **🟢 Verde**: Saturación alta
         - Muchos pisos turísticos 
         - Puede haber problemas para vecinos
         
-        **🔴 Rojo**: Saturación crítica
+        **🟡 Amarillo**: Saturación crítica
         - Predominan pisos turísticos
         - Riesgo de gentrificación
         - Barrio "turistificado"
@@ -3584,7 +3584,8 @@ def mostrar_recomendaciones_regulatorias(datasets, ciudad_seleccionada):
                 fig_listings.update_layout(
                     plot_bgcolor='rgba(0,0,0,0)',
                     paper_bgcolor='rgba(0,0,0,0)',
-                    font_color='white'
+                    font_color='white',
+                    title={'text': "Impacto en Número de Listings", 'font': {'color': 'white'}}
                 )
                 st.plotly_chart(fig_listings, use_container_width=True, key="impacto_listings_escenarios")
             
@@ -3600,7 +3601,8 @@ def mostrar_recomendaciones_regulatorias(datasets, ciudad_seleccionada):
                 fig_ratio.update_layout(
                     plot_bgcolor='rgba(0,0,0,0)',
                     paper_bgcolor='rgba(0,0,0,0)',
-                    font_color='white'
+                    font_color='white',
+                    title={'text': "Impacto en Ratio Turístico", 'font': {'color': 'white'}}
                 )
                 st.plotly_chart(fig_ratio, use_container_width=True, key="impacto_ratio_escenarios")
     
@@ -4019,6 +4021,32 @@ def main():
         """, unsafe_allow_html=True)
         
         # Selector de ciudad
+        # CSS para fondo negro real en el selectbox y dropdown
+        st.markdown("""
+        <style>
+        /* Fondo negro y texto blanco para el selectbox principal */
+        div[data-baseweb="select"] > div {
+            background-color: #111 !important;
+            color: #fafafa !important;
+            border: 1px solid #444 !important;
+        }
+        /* Fondo negro para el menú desplegable */
+        div[data-baseweb="popover"] > div {
+            background-color: #111 !important;
+            color: #fafafa !important;
+        }
+        /* Opciones individuales del dropdown */
+        div[data-baseweb="option"] {
+            background-color: #111 !important;
+            color: #fafafa !important;
+        }
+        /* Placeholder y texto seleccionado */
+        div[data-baseweb="select"] span {
+            color: #fafafa !important;
+        }
+        </style>
+        """, unsafe_allow_html=True)
+
         ciudad_seleccionada = st.selectbox(
             "🏙️ Seleccionar Ciudad de Análisis",
             options=['Madrid', 'Barcelona', 'Mallorca'],
@@ -4199,9 +4227,9 @@ def main():
         "🏘️ Mapa por Barrios", 
         "📈 Ratio Turístico", 
         "⚠️ Alertas Saturación",
-        "💡 Recomendaciones",
+        "🏅 Ocupación Turística",
         "💰 Impacto Económico",
-        "🏅 Ocupación Turística"
+        "💡 Recomendaciones",
     ])
     
     with tab1:
@@ -4249,73 +4277,6 @@ def main():
         mostrar_alertas_saturacion(datasets, geodatos, ciudad_seleccionada, mostrar_criticos, umbral_saturacion)
     
     with tab5:
-        st.markdown("""
-        <div style="background-color: rgba(0, 212, 255, 0.05); border-left: 3px solid #00d4ff; padding: 10px; margin-bottom: 20px; border-radius: 3px;">
-        <p style="margin: 0; font-size: 0.9rem; line-height: 1.4;">
-        💡 <strong>Descubre propuestas concretas</strong> para conseguir un turismo más sostenible y equilibrado, 
-        con medidas específicas para administraciones, plataformas y comunidades locales.
-        </p>
-        </div>
-        """, unsafe_allow_html=True)
-        mostrar_recomendaciones_regulatorias(datasets, ciudad_seleccionada)
-    
-    with tab6:
-        st.markdown("""
-        <div style="background-color: rgba(0, 212, 255, 0.05); border-left: 3px solid #00d4ff; padding: 10px; margin-bottom: 20px; border-radius: 3px;">
-        <p style="margin: 0; font-size: 0.9rem; line-height: 1.4;">
-        💰 <strong>Analiza el impacto económico detallado</strong> del turismo urbano: beneficios, costes, 
-        distribución de ingresos y efectos en la economía local.
-        </p>
-        </div>
-        """, unsafe_allow_html=True)
-        mostrar_analisis_economico_avanzado(datasets, ciudad_seleccionada)
-    
-    # Footer con información de trazabilidad y fuentes
-    st.markdown("---")
-    
-    # Footer con información de calidad usando componentes nativos de Streamlit
-    st.markdown("### 📋 Información sobre la Calidad de los Datos")
-    
-    # Crear tres columnas para mejor visualización
-    col1, col2, col3 = st.columns(3)
-    
-    with col1:
-        st.markdown("#### 🔍 ¿De dónde vienen los datos?")
-        st.write("✅ Plataformas de alojamiento (datos extraídos)")
-        st.write("✅ Registros oficiales de apartamentos turísticos")
-        st.write("✅ Dataset unificado verificado manualmente")
-        st.write("✅ Fuentes gubernamentales españolas")
-    
-    with col2:
-        st.markdown("#### 📊 ¿Cómo trabajamos?")
-        st.write("🚫 No inventamos datos")
-        st.write("🚫 No hacemos estimaciones dudosas")
-        st.write("✅ Datos reales de alojamientos existentes")
-        st.write("✅ Precios y ratios calculados en tiempo real")
-    
-    with col3:
-        st.markdown("#### 🗓️ ¿Está actualizado?")
-        st.write("📅 Normativa: 2024-2025")
-        st.write("🔄 Dataset: Verificado y limpiado")
-        st.write("⚖️ Leyes: Las que están en vigor ahora")
-        st.write("🎯 Enfoque: Basado en datos reales")
-    
-    st.markdown("---")
-    st.markdown(
-        """
-        <div style="text-align: center; margin-top: 20px;">
-        <strong>🏛️ Herramienta desarrollada por Consultores Especializados en Turismo Urbano</strong><br>
-        <em>Nuestro compromiso: información transparente y útil para tomar mejores decisiones sobre turismo sostenible</em><br><br>
-        <span style="font-size: 0.9rem; color: #888;">
-        Los datos mostrados proceden exclusivamente de fuentes oficiales • Última actualización: 2024-2025 • 
-        Enfoque científico y objetivo
-        </span>
-        </div>
-        """, 
-        unsafe_allow_html=True
-    )
-    
-    with tab7:
         st.header("📅 Ocupación Turística")
 
         st.markdown(f"### 🏙️ Análisis de Ocupación en {ciudad_seleccionada}")
@@ -4402,6 +4363,72 @@ def main():
         Los picos en verano y festivos reflejan la estacionalidad del turismo urbano en España.  
         Si tienes datos mensuales reales, puedes sustituir la estimación por los valores reales.
         </p></div>""", unsafe_allow_html=True)
+        
+        with tab6:
+            st.markdown("""
+            <div style="background-color: rgba(0, 212, 255, 0.05); border-left: 3px solid #00d4ff; padding: 10px; margin-bottom: 20px; border-radius: 3px;">
+            <p style="margin: 0; font-size: 0.9rem; line-height: 1.4;">
+            💰 <strong>Analiza el impacto económico detallado</strong> del turismo urbano: beneficios, costes, 
+            distribución de ingresos y efectos en la economía local.
+            </p>
+            </div>
+            """, unsafe_allow_html=True)
+            mostrar_analisis_economico_avanzado(datasets, ciudad_seleccionada)
+    
+    # Footer con información de trazabilidad y fuentes
+    st.markdown("---")
+    
+    # Footer con información de calidad usando componentes nativos de Streamlit
+    st.markdown("### 📋 Información sobre la Calidad de los Datos")
+    
+    # Crear tres columnas para mejor visualización
+    col1, col2, col3 = st.columns(3)
+    
+    with col1:
+        st.markdown("#### 🔍 ¿De dónde vienen los datos?")
+        st.write("✅ Plataformas de alojamiento (datos extraídos)")
+        st.write("✅ Registros oficiales de apartamentos turísticos")
+        st.write("✅ Dataset unificado verificado manualmente")
+        st.write("✅ Fuentes gubernamentales españolas")
+    
+    with col2:
+        st.markdown("#### 📊 ¿Cómo trabajamos?")
+        st.write("🚫 No inventamos datos")
+        st.write("🚫 No hacemos estimaciones dudosas")
+        st.write("✅ Datos reales de alojamientos existentes")
+        st.write("✅ Precios y ratios calculados en tiempo real")
+    
+    with col3:
+        st.markdown("#### 🗓️ ¿Está actualizado?")
+        st.write("📅 Normativa: 2024-2025")
+        st.write("🔄 Dataset: Verificado y limpiado")
+        st.write("⚖️ Leyes: Las que están en vigor ahora")
+        st.write("🎯 Enfoque: Basado en datos reales")
+    
+    st.markdown("---")
+    st.markdown(
+        """
+        <div style="text-align: center; margin-top: 20px;">
+        <strong>🏛️ Herramienta desarrollada por Consultores Especializados en Turismo Urbano</strong><br>
+        <em>Nuestro compromiso: información transparente y útil para tomar mejores decisiones sobre turismo sostenible</em><br><br>
+        <span style="font-size: 0.9rem; color: #888;">
+        Los datos mostrados proceden exclusivamente de fuentes oficiales • Última actualización: 2024-2025 • 
+        Enfoque científico y objetivo
+        </span>
+        </div>
+        """, 
+        unsafe_allow_html=True)
+        
+    with tab7:
+        st.markdown("""
+        <div style="background-color: rgba(0, 212, 255, 0.05); border-left: 3px solid #00d4ff; padding: 10px; margin-bottom: 20px; border-radius: 3px;">
+        <p style="margin: 0; font-size: 0.9rem; line-height: 1.4;">
+        💡 <strong>Descubre propuestas concretas</strong> para conseguir un turismo más sostenible y equilibrado, 
+        con medidas específicas para administraciones, plataformas y comunidades locales.
+        </p>
+        </div>
+        """, unsafe_allow_html=True)
+        mostrar_recomendaciones_regulatorias(datasets, ciudad_seleccionada)
 
 # Ejecución de la aplicación
 if __name__ == "__main__":
