@@ -3015,27 +3015,59 @@ def mostrar_densidad_por_barrio(datasets, geodatos, ciudad_seleccionada):
                 col1, col2, col3, col4 = st.columns(4)
                 
                 with col1:
-                    st.metric("Media", f"{df_ciudad['total_listings'].mean():.0f} alojamientos")
-                
+                    st.markdown(
+                        f"<div style='font-size:0.95rem; text-align:center; line-height:1.2;'>"
+                        f"<span style='font-size:1.1rem; font-weight:bold;'>{df_ciudad['total_listings'].mean():.0f}</span><br>"
+                        f"<span style='font-size:0.85rem;'>alojamientos<br>media</span></div>",
+                        unsafe_allow_html=True
+                    )
                 with col2:
-                    st.metric("Mediana", f"{df_ciudad['total_listings'].median():.0f} alojamientos")
-                
+                    st.markdown(
+                        f"<div style='font-size:0.95rem; text-align:center; line-height:1.2;'>"
+                        f"<span style='font-size:1.1rem; font-weight:bold;'>{df_ciudad['total_listings'].median():.0f}</span><br>"
+                        f"<span style='font-size:0.85rem;'>alojamientos<br>mediana</span></div>",
+                        unsafe_allow_html=True
+                    )
                 with col3:
-                    st.metric("Máximo", f"{df_ciudad['total_listings'].max():.0f} alojamientos")
-                
+                    st.markdown(
+                        f"<div style='font-size:0.95rem; text-align:center; line-height:1.2;'>"
+                        f"<span style='font-size:1.1rem; font-weight:bold;'>{df_ciudad['total_listings'].max():.0f}</span><br>"
+                        f"<span style='font-size:0.85rem;'>alojamientos<br>máximo</span></div>",
+                        unsafe_allow_html=True
+                    )
                 with col4:
-                    st.metric("Desv. Estándar", f"{df_ciudad['total_listings'].std():.0f}")
+                    st.markdown(
+                        f"<div style='font-size:0.95rem; text-align:center; line-height:1.2;'>"
+                        f"<span style='font-size:1.1rem; font-weight:bold;'>{df_ciudad['total_listings'].std():.0f}</span><br>"
+                        f"<span style='font-size:0.85rem;'>desv.<br>estándar</span></div>",
+                        unsafe_allow_html=True
+                    )
             else:
                 st.warning("⚠️ Estadísticas de concentración no disponibles")
                 
                 with col2:
-                    st.metric("Mediana", f"{df_ciudad['total_listings'].median():.0f}")
+                    st.markdown(
+                        f"<div style='font-size:0.95rem; text-align:center; line-height:1.2;'>"
+                        f"<span style='font-size:1.1rem; font-weight:bold;'>{df_ciudad['total_listings'].median():.0f}</span><br>"
+                        f"<span style='font-size:0.85rem;'>alojamientos<br>mediana</span></div>",
+                        unsafe_allow_html=True
+                    )
                 
                 with col3:
-                    st.metric("Máximo", f"{df_ciudad['total_listings'].max():.0f}")
+                    st.markdown(
+                        f"<div style='font-size:0.95rem; text-align:center; line-height:1.2;'>"
+                        f"<span style='font-size:1.1rem; font-weight:bold;'>{df_ciudad['total_listings'].max():.0f}</span><br>"
+                        f"<span style='font-size:0.85rem;'>alojamientos<br>máximo</span></div>",
+                        unsafe_allow_html=True
+                    )
                 
                 with col4:
-                    st.metric("Total", f"{df_ciudad['total_listings'].sum():,}")
+                    st.markdown(
+                        f"<div style='font-size:0.95rem; text-align:center; line-height:1.2;'>"
+                        f"<span style='font-size:1.1rem; font-weight:bold;'>{df_ciudad['total_listings'].sum():,}</span><br>"
+                        f"<span style='font-size:0.85rem;'>total<br>alojamientos</span></div>",
+                        unsafe_allow_html=True
+                    )
             
             # Mapa de precios por barrio
             st.markdown("---")
@@ -3660,7 +3692,12 @@ def mostrar_analisis_economico_avanzado(datasets, ciudad_seleccionada):
                         plot_bgcolor='rgba(0,0,0,0)',
                         paper_bgcolor='rgba(0,0,0,0)',
                         font_color='white',
-                        height=300
+                        height=300,
+                        title={
+                            'text': "Evolución PIB Turístico Airbnb (Millones €)",
+                            'font': {'color': 'white'},
+                            'x': 0.0  # Alineado a la izquierda
+                        }
                     )
                     st.plotly_chart(fig_pib, use_container_width=True)
                     
@@ -3714,7 +3751,9 @@ def mostrar_analisis_economico_avanzado(datasets, ciudad_seleccionada):
                         plot_bgcolor='rgba(0,0,0,0)',
                         paper_bgcolor='rgba(0,0,0,0)',
                         font_color='white',
-                        height=300
+                        height=300,
+                        title_font_color='white',
+                        legend=dict(font=dict(color='white'))
                     )
                     st.plotly_chart(fig_empleo, use_container_width=True)
                     
@@ -4144,12 +4183,13 @@ def main():
     <div style="background-color: rgba(0, 212, 255, 0.05); border-radius: 8px; padding: 15px; margin-bottom: 15px;">
     <p style="margin: 0; font-size: 0.9rem; line-height: 1.4; color: #fafafa;">
     <strong>💡 Guía rápida:</strong> 
-    <strong>Resumen General</strong> = Panorámica completa | 
+    <strong>Resumen </strong> = Panorámica completa | 
     <strong>Mapa por Barrios</strong> = Dónde se concentra el turismo | 
-    <strong>¿Cuánto Turismo hay?</strong> = Proporción turismo/residentes | 
-    <strong>Zonas Problemáticas</strong> = Barrios saturados | 
-    <strong>Qué se puede hacer</strong> = Soluciones y propuestas | 
-    <strong>Impacto Económico</strong> = Beneficios y costes
+    <strong>Ratio Turístico</strong> = Proporción turismo/residentes | 
+    <strong>Alertas saturación</strong> = Barrios saturados | 
+    <strong>Recomendaciones</strong> = Soluciones y propuestas | 
+    <strong>Impacto Económico</strong> = Beneficios y costes |
+    <strong>Ocupación Turística</strong> = Análisis de demanda turística por temporadas
     </p>
     </div>
     """, unsafe_allow_html=True)
