@@ -3634,10 +3634,18 @@ def mostrar_analisis_economico_avanzado(datasets, ciudad_seleccionada):
         listings_ciudad = df_listings[df_listings['ciudad'].str.lower() == ciudad_seleccionada.lower()]
         
         if not ciudad_data.empty and not listings_ciudad.empty:
-            col1, col2 = st.columns(2)
+            # Primera fila: Métricas principales con mejor espaciado
+            st.markdown("### 📊 Resumen Económico Principal")
+            
+            col1, col2, col3 = st.columns([1, 1, 1])
             
             with col1:
-                st.subheader("📊 PIB Turístico Estimado")
+                st.markdown("""
+                <div style="background-color: rgba(0, 212, 255, 0.1); border-left: 4px solid #00d4ff; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                <h4 style="color: #00d4ff; margin: 0 0 10px 0;">📊 PIB Turístico Estimado</h4>
+                </div>
+                """, unsafe_allow_html=True)
+                
                 # Calcular métricas económicas basadas en datos reales
                 try:
                     total_listings = int(ciudad_data['total_listings'].iloc[0])
@@ -3660,54 +3668,28 @@ def mostrar_analisis_economico_avanzado(datasets, ciudad_seleccionada):
                     pib_total = pib_turistico_total.get(ciudad_seleccionada.lower(), 4000)
                     porcentaje_airbnb = (pib_airbnb_millones / pib_total) * 100
                     
-                    # Mostrar métricas
-                    col1_1, col1_2 = st.columns(2)
-                    with col1_1:
-                        st.metric(
-                            "PIB Airbnb Anual",
-                            f"€{pib_airbnb_millones:.1f}M",
-                            f"{porcentaje_airbnb:.1f}% del PIB turístico"
-                        )
-                    with col1_2:
-                        st.metric(
-                            "Ingreso Diario",
-                            f"€{pib_airbnb_diario:,.0f}",
-                            f"De {total_listings:,} alojamientos"
-                        )
-                    
-                    # Gráfico de evolución mensual
-                    meses = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 
-                            'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
-                    # Patrón estacional realista para España
-                    factor_estacional = [0.6, 0.65, 0.75, 0.85, 0.95, 1.1, 
-                                       1.3, 1.35, 1.15, 0.9, 0.7, 0.65]
-                    
-                    pib_mensual = [pib_airbnb_anual/12 * factor for factor in factor_estacional]
-                    
-                    fig_pib = px.line(
-                        x=meses,
-                        y=pib_mensual,
-                        title="Evolución PIB Turístico Airbnb (Millones €)",
-                        labels={'x': 'Mes', 'y': 'PIB (Millones €)'}
+                    # Mostrar métricas con mejor formato
+                    st.metric(
+                        "PIB Airbnb Anual",
+                        f"€{pib_airbnb_millones:.1f}M",
+                        f"{porcentaje_airbnb:.1f}% del PIB turístico"
                     )
-                    fig_pib.update_layout(
-                        plot_bgcolor='rgba(0,0,0,0)',
-                        paper_bgcolor='rgba(0,0,0,0)',
-                        font_color='white',
-                        height=300,
-                        title={
-                            'text': "Evolución PIB Turístico Airbnb (Millones €)",
-                            'font': {'color': 'white'},
-                            'x': 0.0  # Alineado a la izquierda
-                        }
+                    st.metric(
+                        "Ingreso Diario",
+                        f"€{pib_airbnb_diario:,.0f}",
+                        f"De {total_listings:,} alojamientos"
                     )
-                    st.plotly_chart(fig_pib, use_container_width=True)
                     
                 except Exception as e:
                     st.warning("⚠️ Error al calcular PIB turístico")
             
             with col2:
-                st.subheader("💼 Empleo Generado")
+                st.markdown("""
+                <div style="background-color: rgba(40, 167, 69, 0.1); border-left: 4px solid #28a745; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                <h4 style="color: #28a745; margin: 0 0 10px 0;">💼 Empleo Generado</h4>
+                </div>
+                """, unsafe_allow_html=True)
+                
                 # Análisis real de empleo basado en datos disponibles
                 try:
                     # Estimación de empleo directo e indirecto
@@ -3723,44 +3705,247 @@ def mostrar_analisis_economico_avanzado(datasets, ciudad_seleccionada):
                     salario_medio_mensual = 1850  # € bruto mensual
                     masa_salarial_anual = empleo_total * salario_medio_mensual * 12 / 1_000_000
                     
-                    # Mostrar métricas
-                    col2_1, col2_2 = st.columns(2)
-                    with col2_1:
-                        st.metric(
-                            "Empleos Totales",
-                            f"{empleo_total:,.0f}",
-                            f"{empleo_directo:,.0f} directos"
-                        )
-                    with col2_2:
-                        st.metric(
-                            "Masa Salarial",
-                            f"€{masa_salarial_anual:.1f}M/año",
-                            f"€{salario_medio_mensual}/mes promedio"
-                        )
+                    # Mostrar métricas con mejor formato
+                    st.metric(
+                        "Empleos Totales",
+                        f"{empleo_total:,.0f}",
+                        f"{empleo_directo:,.0f} directos"
+                    )
+                    st.metric(
+                        "Masa Salarial",
+                        f"€{masa_salarial_anual:.1f}M/año",
+                        f"€{salario_medio_mensual}/mes promedio"
+                    )
                     
-                    # Distribución por tipo de empleo
-                    tipos_empleo = ['Gestión Alojamientos', 'Limpieza', 'Mantenimiento', 
-                                  'Servicios Turísticos', 'Comercio Local']
+                except Exception as e:
+                    st.warning("⚠️ Error al calcular empleo generado")
+            
+            with col3:
+                st.markdown("""
+                <div style="background-color: rgba(255, 193, 7, 0.1); border-left: 4px solid #ffc107; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                <h4 style="color: #ffc107; margin: 0 0 10px 0;">📋 Estado de Licencias</h4>
+                </div>
+                """, unsafe_allow_html=True)
+                
+                # Análisis de licencias usando datos filtrados del dataset unificado
+                try:
+                    # Verificar si la columna license existe en los datos filtrados
+                    if 'license' in listings_ciudad.columns:
+                        # Calcular distribución de licencias
+                        license_counts = listings_ciudad['license'].value_counts()
+                        
+                        # Convertir valores True/False a etiquetas más descriptivas
+                        license_labels = []
+                        license_values = []
+                        license_colors = []
+                        
+                        for status, count in license_counts.items():
+                            if status == True or status == 'True':
+                                license_labels.append('Con Licencia')
+                                license_colors.append('#28a745')  # Verde
+                            else:
+                                license_labels.append('Sin Licencia')
+                                license_colors.append('#dc3545')  # Rojo
+                            license_values.append(count)
+                        
+                        # Mostrar métricas resumen
+                        total_con_licencia = license_counts.get(True, 0) + license_counts.get('True', 0)
+                        total_sin_licencia = license_counts.get(False, 0) + license_counts.get('False', 0)
+                        total_analizados = total_con_licencia + total_sin_licencia
+                        porcentaje_con_licencia = (total_con_licencia / total_analizados * 100) if total_analizados > 0 else 0
+                        
+                        st.metric(
+                            "Con Licencia",
+                            f"{total_con_licencia:,}",
+                            f"{porcentaje_con_licencia:.1f}% del total"
+                        )
+                        st.metric(
+                            "Total Válidos",
+                            f"{total_analizados:,}",
+                            "Datos verificados"
+                        )
+                        
+                    else:
+                        st.warning("⚠️ Columna 'license' no encontrada")
+                        
+                except Exception as e:
+                    st.warning(f"⚠️ Error al analizar licencias: {str(e)}")
+            
+            # Segunda fila: Pie chart de licencias centrado
+            st.markdown("---")
+            st.markdown("### 📊 Distribución Detallada de Licencias")
+            
+            # Centrar el pie chart
+            col_left, col_chart, col_right = st.columns([1, 2, 1])
+            
+            with col_chart:
+                try:
+                    if 'license' in listings_ciudad.columns:
+                        license_counts = listings_ciudad['license'].value_counts()
+                        
+                        # Preparar datos para el gráfico
+                        license_labels = []
+                        license_values = []
+                        license_colors = []
+                        
+                        for status, count in license_counts.items():
+                            if status == True or status == 'True':
+                                license_labels.append('Con Licencia')
+                                license_colors.append('#28a745')  # Verde
+                            else:
+                                license_labels.append('Sin Licencia')
+                                license_colors.append('#dc3545')  # Rojo
+                            license_values.append(count)
+                        
+                        # Crear pie chart mejorado
+                        if len(license_values) > 0:
+                            fig_licenses = px.pie(
+                                values=license_values,
+                                names=license_labels,
+                                title=f"📋 Estado de Licencias en {ciudad_seleccionada}",
+                                color_discrete_sequence=license_colors
+                            )
+                            fig_licenses.update_layout(
+                                plot_bgcolor='rgba(0,0,0,0)',
+                                paper_bgcolor='rgba(0,0,0,0)',
+                                font_color='white',
+                                height=400,
+                                title={
+                                    'text': f"📋 Estado de Licencias en {ciudad_seleccionada}",
+                                    'font': {'color': 'white', 'size': 16},
+                                    'x': 0.5
+                                },
+                                legend=dict(
+                                    font=dict(color='white', size=12),
+                                    orientation="h",
+                                    yanchor="bottom",
+                                    y=-0.15,
+                                    xanchor="center",
+                                    x=0.5
+                                ),
+                                margin=dict(l=30, r=30, t=60, b=60)
+                            )
+                            fig_licenses.update_traces(
+                                textposition='inside',
+                                textinfo='percent+value',
+                                textfont_size=12,
+                                textfont_color='white',
+                                hole=0.3  # Hacer un donut chart para mejor apariencia
+                            )
+                            st.plotly_chart(fig_licenses, use_container_width=True, key="pie_chart_licencias")
+                        else:
+                            st.warning("⚠️ No hay datos de licencias disponibles")
+                    else:
+                        st.warning("⚠️ Columna 'license' no encontrada en los datos")
+                        
+                except Exception as e:
+                    st.warning(f"⚠️ Error al mostrar gráfico de licencias: {str(e)}")
+            
+            # Tercera fila: Gráficos detallados mejorados
+            st.markdown("---")
+            st.markdown("### 📈 Análisis Detallado")
+            
+            col1_detailed, col2_detailed = st.columns(2)
+            
+            with col1_detailed:
+                st.markdown("""
+                <div style="background-color: rgba(0, 212, 255, 0.05); border: 1px solid #00d4ff; border-radius: 8px; padding: 15px; margin-bottom: 15px;">
+                <h4 style="color: #00d4ff; margin: 0 0 10px 0;">📈 Evolución PIB Turístico</h4>
+                <p style="margin: 0; font-size: 0.9rem; color: #cccccc;">Proyección mensual basada en patrones estacionales</p>
+                </div>
+                """, unsafe_allow_html=True)
+                
+                try:
+                    # Gráfico de evolución mensual
+                    meses = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 
+                            'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
+                    # Patrón estacional realista para España
+                    factor_estacional = [0.6, 0.65, 0.75, 0.85, 0.95, 1.1, 
+                                       1.3, 1.35, 1.15, 0.9, 0.7, 0.65]
+                    
+                    pib_mensual = [pib_airbnb_anual/12 * factor for factor in factor_estacional]
+                    
+                    fig_pib = px.line(
+                        x=meses,
+                        y=pib_mensual,
+                        title="",
+                        labels={'x': 'Mes', 'y': 'PIB (Millones €)'}
+                    )
+                    fig_pib.update_layout(
+                        plot_bgcolor='rgba(0,0,0,0)',
+                        paper_bgcolor='rgba(0,0,0,0)',
+                        font_color='white',
+                        height=320,
+                        margin=dict(l=10, r=10, t=10, b=10),
+                        xaxis=dict(
+                            gridcolor='rgba(255,255,255,0.1)',
+                            showgrid=True
+                        ),
+                        yaxis=dict(
+                            gridcolor='rgba(255,255,255,0.1)',
+                            showgrid=True
+                        )
+                    )
+                    fig_pib.update_traces(
+                        line=dict(color='#00d4ff', width=3),
+                        marker=dict(size=6, color='#00d4ff')
+                    )
+                    st.plotly_chart(fig_pib, use_container_width=True, key="evolucion_pib_turistico")
+                    
+                except Exception as e:
+                    st.warning("⚠️ Error al generar gráfico PIB")
+            
+            with col2_detailed:
+                st.markdown("""
+                <div style="background-color: rgba(40, 167, 69, 0.05); border: 1px solid #28a745; border-radius: 8px; padding: 15px; margin-bottom: 15px;">
+                <h4 style="color: #28a745; margin: 0 0 10px 0;">👥 Distribución del Empleo</h4>
+                <p style="margin: 0; font-size: 0.9rem; color: #cccccc;">Desglose por sectores económicos</p>
+                </div>
+                """, unsafe_allow_html=True)
+                
+                try:
+                    # Distribución por tipo de empleo con mejores etiquetas
+                    tipos_empleo = ['🏢 Gestión', '🧹 Limpieza', '🔧 Mantenimiento', 
+                                  '🎯 Servicios', '🛍️ Comercio']
                     distribucion = [35, 25, 15, 15, 10]  # Porcentajes
                     empleos_por_tipo = [empleo_total * (p/100) for p in distribucion]
+                    
+                    # Colores más atractivos
+                    colores_empleo = ['#00d4ff', '#28a745', '#ffc107', '#fd7e14', '#6f42c1']
                     
                     fig_empleo = px.pie(
                         values=empleos_por_tipo,
                         names=tipos_empleo,
-                        title="Distribución del Empleo por Sector"
+                        title="",
+                        color_discrete_sequence=colores_empleo
                     )
                     fig_empleo.update_layout(
                         plot_bgcolor='rgba(0,0,0,0)',
                         paper_bgcolor='rgba(0,0,0,0)',
                         font_color='white',
-                        height=300,
-                        title_font_color='white',
-                        legend=dict(font=dict(color='white'))
+                        height=320,
+                        margin=dict(l=10, r=10, t=10, b=10),
+                        legend=dict(
+                            font=dict(color='white', size=10),
+                            orientation="v",
+                            yanchor="middle",
+                            y=0.5,
+                            xanchor="left",
+                            x=1.02
+                        )
                     )
-                    st.plotly_chart(fig_empleo, use_container_width=True)
+                    fig_empleo.update_traces(
+                        textposition='inside',
+                        textinfo='percent',
+                        textfont_size=11,
+                        textfont_color='white',
+                        hole=0.4  # Donut chart para mejor apariencia
+                    )
+                    st.plotly_chart(fig_empleo, use_container_width=True, key="distribucion_empleo")
                     
                 except Exception as e:
-                    st.warning("⚠️ Error al calcular empleo generado")
+                    st.warning("⚠️ Error al generar gráfico de empleo")
+                    
     else:
         st.warning("⚠️ Datos económicos no disponibles")
 
@@ -4080,11 +4265,6 @@ def main():
         
         **🏝️ Mallorca**: Moratoria en zonas con demasiados turistas (Diciembre 2024)
         """)
-        
-        # Estado del sistema con información actualizada
-        st.markdown("### 📊 Sobre los Datos")
-        st.success("✅ Información oficial y verificada")
-        st.info("📅 Actualizado: 2024-2025")
     
     # Cargar todos los datasets con validación usando placeholder dinámico
     loading_placeholder = st.empty()

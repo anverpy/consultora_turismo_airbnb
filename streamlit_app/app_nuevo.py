@@ -1603,6 +1603,47 @@ def mostrar_vision_general(datasets, metricas, geodatos, ciudad_seleccionada):
                     delta="Estimación anual",
                     help="Impacto económico total estimado del sector - incluye gasto directo e indirecto"
                 )
+        
+        # Debug: Mostrar información sobre disponibilidad de datos
+        if st.sidebar.checkbox("🔍 Mostrar información de debug de datos", value=False):
+            st.markdown("### 🔍 Información de Debug de Datos")
+            
+            if 'kpis_barrio' in datasets and not datasets['kpis_barrio'].empty:
+                df_debug = datasets['kpis_barrio']
+                st.markdown("**📊 Dataset kpis_barrio:**")
+                st.markdown(f"- Filas: {len(df_debug)}")
+                st.markdown(f"- Columnas: {list(df_debug.columns)}")
+                
+                # Mostrar estadísticas de columnas clave
+                col_debug1, col_debug2 = st.columns(2)
+                
+                with col_debug1:
+                    if 'total_listings' in df_debug.columns:
+                        st.markdown(f"**total_listings**: min={df_debug['total_listings'].min()}, max={df_debug['total_listings'].max()}, sum={df_debug['total_listings'].sum()}")
+                    
+                    precio_cols = ['price', 'precio_medio', 'precio_medio_euros', 'average_price']
+                    for col in precio_cols:
+                        if col in df_debug.columns:
+                            valores_validos = df_debug[col].dropna()
+                            if len(valores_validos) > 0:
+                                st.markdown(f"**{col}**: valores válidos={len(valores_validos)}, promedio={valores_validos.mean():.2f}")
+                            else:
+                                st.markdown(f"**{col}**: Sin valores válidos")
+                
+                with col_debug2:
+                    ciudades = df_debug['ciudad'].unique() if 'ciudad' in df_debug.columns else []
+                    st.markdown(f"**Ciudades disponibles**: {list(ciudades)}")
+                    
+                    if 'ciudad' in df_debug.columns:
+                        for ciudad in ciudades:
+                            df_ciudad = df_debug[df_debug['ciudad'] == ciudad]
+                            st.markdown(f"- {ciudad}: {len(df_ciudad)} barrios")
+            
+            if 'kpis_ciudad' in datasets and not datasets['kpis_ciudad'].empty:
+                df_ciudad_debug = datasets['kpis_ciudad']
+                st.markdown("**🏙️ Dataset kpis_ciudad:**")
+                st.markdown(f"- Filas: {len(df_ciudad_debug)}")
+                st.markdown(f"- Columnas: {list(df_ciudad_debug.columns)}")
     
     else:
         st.warning("⚠️ No hay datos disponibles para mostrar métricas consolidadas")
