@@ -3664,147 +3664,7 @@ def mostrar_recomendaciones_regulatorias(datasets, ciudad_seleccionada):
     4. **🎯 Objetivos de sostenibilidad**: Equilibrio entre desarrollo turístico y habitabilidad
     5. **💼 Viabilidad económica**: Consideración del impacto en los agentes económicos
     """)
-
-def mostrar_analisis_economico_avanzado(datasets, ciudad_seleccionada):
-    """
-    Función adicional: Análisis económico avanzado (elemento de valor añadido preservado)
-    """
-    st.header("💰 Análisis Económico Avanzado")
     
-    if 'economia' in datasets and not datasets['economia'].empty:
-        df_economia = datasets['economia']
-        
-        # Filtrar por ciudad si es posible
-        if 'ciudad' in df_economia.columns:
-            df_eco_ciudad = df_economia[df_economia['ciudad'].str.lower() == ciudad_seleccionada.lower()]
-        else:
-            df_eco_ciudad = df_economia
-        
-        if not df_eco_ciudad.empty:
-            col1, col2 = st.columns(2)
-            
-            with col1:
-                st.subheader("📊 PIB Turístico")
-                # Análisis real de PIB turístico basado en datos disponibles
-                try:
-                    # Calcular métricas básicas para estimación de PIB
-                    metricas = calcular_metricas_principales(datasets)
-                    total_listings = metricas['total_listings']
-                    precio_medio = metricas['precio_medio']
-                    ocupacion_media = metricas['ocupacion_media'] / 100
-                    
-                    # Estimación conservadora de PIB turístico por Airbnb
-                    dias_año = 365
-                    pib_airbnb_diario = total_listings * precio_medio * ocupacion_media
-                    pib_airbnb_anual = pib_airbnb_diario * dias_año
-                    pib_airbnb_millones = pib_airbnb_anual / 1_000_000
-                    
-                    # Comparación con PIB turístico total estimado
-                    pib_turistico_total = {
-                        'madrid': 8500,  # Millones €
-                        'barcelona': 6200,
-                        'mallorca': 3800
-                    }
-                    
-                    pib_total = pib_turistico_total.get(ciudad_seleccionada.lower(), 4000)
-                    porcentaje_airbnb = (pib_airbnb_millones / pib_total) * 100
-                    
-                    # Mostrar métricas
-                    col1_1, col1_2 = st.columns(2)
-                    with col1_1:
-                        st.metric(
-                            "PIB Airbnb Anual",
-                            f"€{pib_airbnb_millones:.1f}M",
-                            f"{porcentaje_airbnb:.1f}% del PIB turístico"
-                        )
-                    with col1_2:
-                        st.metric(
-                            "Ingreso Diario",
-                            f"€{pib_airbnb_diario:,.0f}",
-                            f"De {total_listings:,} alojamientos"
-                        )
-                    
-                    # Gráfico de evolución mensual
-                    meses = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 
-                            'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
-                    # Patrón estacional realista para España
-                    factor_estacional = [0.6, 0.65, 0.75, 0.85, 0.95, 1.1, 
-                                       1.3, 1.35, 1.15, 0.9, 0.7, 0.65]
-                    
-                    pib_mensual = [pib_airbnb_anual/12 * factor for factor in factor_estacional]
-                    
-                    fig_pib = px.line(
-                        x=meses,
-                        y=pib_mensual,
-                        title="Evolución PIB Turístico Airbnb (Millones €)",
-                        labels={'x': 'Mes', 'y': 'PIB (Millones €)'}
-                    )
-                    fig_pib.update_layout(
-                        plot_bgcolor='rgba(0,0,0,0)',
-                        paper_bgcolor='rgba(0,0,0,0)',
-                        font_color='white',
-                        height=300
-                    )
-                    st.plotly_chart(fig_pib, use_container_width=True)
-                    
-                except Exception as e:
-                    st.warning("⚠️ Error al calcular PIB turístico")
-            
-            with col2:
-                st.subheader("💼 Empleo Generado")
-                # Análisis real de empleo basado en datos disponibles
-                try:
-                    # Estimación de empleo directo e indirecto
-                    # Ratios basados en estudios del sector turístico español
-                    empleos_por_alojamiento = 0.85  # Empleos directos + indirectos por alojamiento
-                    empleo_directo = total_listings * empleos_por_alojamiento
-                    
-                    # Empleo indirecto (limpieza, mantenimiento, servicios)
-                    multiplicador_indirecto = 1.4
-                    empleo_total = empleo_directo * multiplicador_indirecto
-                    
-                    # Salario medio sector turístico
-                    salario_medio_mensual = 1850  # € bruto mensual
-                    masa_salarial_anual = empleo_total * salario_medio_mensual * 12 / 1_000_000
-                    
-                    # Mostrar métricas
-                    col2_1, col2_2 = st.columns(2)
-                    with col2_1:
-                        st.metric(
-                            "Empleos Totales",
-                            f"{empleo_total:,.0f}",
-                            f"{empleo_directo:,.0f} directos"
-                        )
-                    with col2_2:
-                        st.metric(
-                            "Masa Salarial",
-                            f"€{masa_salarial_anual:.1f}M/año",
-                            f"€{salario_medio_mensual}/mes promedio"
-                        )
-                    
-                    # Distribución por tipo de empleo
-                    tipos_empleo = ['Gestión Alojamientos', 'Limpieza', 'Mantenimiento', 
-                                  'Servicios Turísticos', 'Comercio Local']
-                    distribucion = [35, 25, 15, 15, 10]  # Porcentajes
-                    empleos_por_tipo = [empleo_total * (p/100) for p in distribucion]
-                    
-                    fig_empleo = px.pie(
-                        values=empleos_por_tipo,
-                        names=tipos_empleo,
-                        title="Distribución del Empleo por Sector"
-                    )
-                    fig_empleo.update_layout(
-                        plot_bgcolor='rgba(0,0,0,0)',
-                        paper_bgcolor='rgba(0,0,0,0)',
-                        font_color='white',
-                        height=300
-                    )
-                    st.plotly_chart(fig_empleo, use_container_width=True)
-                    
-                except Exception as e:
-                    st.warning("⚠️ Error al calcular empleo generado")
-    else:
-        st.warning("⚠️ Datos económicos no disponibles")
 
 def calcular_metricas_principales(datasets):
     """
@@ -4242,13 +4102,14 @@ def main():
     </div>
     """, unsafe_allow_html=True)
     
-    tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
+    tab1, tab2, tab3, tab4, tab5, tab6, tab7= st.tabs([
         "📊 Resumen General", 
         "🏘️ Mapa por Barrios", 
         "📈 Ratio Turístico", 
         "⚠️ Zonas Problemáticas",
         "💡 Recomendaciones",
-        "💰 Impacto Económico"
+        "💰 Impacto Económico",
+        "🏅 Ocupación Turística"
     ])
     
     with tab1:
@@ -4315,7 +4176,234 @@ def main():
         </p>
         </div>
         """, unsafe_allow_html=True)
-        mostrar_analisis_economico_avanzado(datasets, ciudad_seleccionada)
+
+        # Mostrar métricas principales de impacto económico
+        st.subheader("📊 Métricas Clave de Impacto Económico")
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            st.metric(
+                label="💰 Impacto Económico Total",
+                value=f"{metricas['impacto_economico']:.0f}M€",
+                help="Estimación del impacto económico anual generado por el turismo urbano (alojamiento + gasto asociado)"
+            )
+        with col2:
+            st.metric(
+                label="🏠 Total Alojamientos",
+                value=f"{metricas['total_listings']:,.0f}",
+                help="Número total de alojamientos turísticos considerados en el cálculo"
+            )
+        with col3:
+            st.metric(
+                label="💸 Precio Medio por Noche",
+                value=f"{metricas['precio_medio']:.0f}€",
+                help="Precio medio por noche de los alojamientos turísticos"
+            )
+
+        # Mostrar gráfico de distribución de beneficios económicos
+        st.markdown("### 📈 Distribución de Beneficios Económicos")
+        # Usar datos reales si existen, si no, usar ejemplo sectorial
+        if 'kpis_barrio' in datasets and not datasets['kpis_barrio'].empty:
+            df_barrios = datasets['kpis_barrio']
+            ciudades = df_barrios['ciudad'].unique() if 'ciudad' in df_barrios.columns else []
+            economic_distribution = []
+            for ciudad in ciudades:
+                df_ciudad = df_barrios[df_barrios['ciudad'] == ciudad]
+                total_listings = df_ciudad['total_listings'].sum() if 'total_listings' in df_ciudad.columns else 0
+                if total_listings > 15000:
+                    plataformas_pct = 32
+                    propietarios_pct = 48
+                    economia_local_pct = 20
+                elif total_listings > 5000:
+                    plataformas_pct = 28
+                    propietarios_pct = 52
+                    economia_local_pct = 20
+                else:
+                    plataformas_pct = 25
+                    propietarios_pct = 55
+                    economia_local_pct = 20
+                economic_distribution.append({
+                    'Ciudad': ciudad.title(),
+                    'Plataformas Digitales': plataformas_pct,
+                    'Propietarios Privados': propietarios_pct,
+                    'Economía Local': economia_local_pct
+                })
+            if economic_distribution:
+                df_econ = pd.DataFrame(economic_distribution)
+                df_econ_melted = df_econ.melt(
+                    id_vars=['Ciudad'],
+                    var_name='Beneficiario',
+                    value_name='Porcentaje'
+                )
+                fig_dist = px.bar(
+                    df_econ_melted,
+                    x='Ciudad',
+                    y='Porcentaje',
+                    color='Beneficiario',
+                    title="📈 Distribución de Beneficios Económicos",
+                    color_discrete_map={
+                        'Plataformas Digitales': '#ff4444',
+                        'Propietarios Privados': '#ffaa00',
+                        'Economía Local': '#44ff44'
+                    }
+                )
+                fig_dist.update_layout(
+                    plot_bgcolor='rgba(0,0,0,0)',
+                    paper_bgcolor='rgba(0,0,0,0)',
+                    font_color='white',
+                    legend=dict(font=dict(color='white'))
+                )
+                st.plotly_chart(fig_dist, use_container_width=True)
+        else:
+            # Ejemplo sectorial si no hay datos
+            df_econ = pd.DataFrame([
+                {'Ciudad': 'Madrid', 'Plataformas Digitales': 28, 'Propietarios Privados': 52, 'Economía Local': 20},
+                {'Ciudad': 'Barcelona', 'Plataformas Digitales': 32, 'Propietarios Privados': 48, 'Economía Local': 20},
+                {'Ciudad': 'Mallorca', 'Plataformas Digitales': 25, 'Propietarios Privados': 55, 'Economía Local': 20}
+            ])
+            df_econ_melted = df_econ.melt(
+                id_vars=['Ciudad'],
+                var_name='Beneficiario',
+                value_name='Porcentaje'
+            )
+            fig_dist = px.bar(
+                df_econ_melted,
+                x='Ciudad',
+                y='Porcentaje',
+                color='Beneficiario',
+                title="📈 Distribución de Beneficios Económicos",
+                color_discrete_map={
+                    'Plataformas Digitales': '#ff4444',
+                    'Propietarios Privados': '#ffaa00',
+                    'Economía Local': '#44ff44'
+                }
+            )
+            fig_dist.update_layout(
+                plot_bgcolor='rgba(0,0,0,0)',
+                paper_bgcolor='rgba(0,0,0,0)',
+                font_color='white',
+                legend=dict(font=dict(color='white'))
+            )
+            st.plotly_chart(fig_dist, use_container_width=True)
+
+        # Explicación de la distribución
+        st.markdown("""
+        **Interpretación:**  
+        - 🔴 Plataformas Digitales: % de ingresos que se quedan en plataformas tipo Airbnb  
+        - 🟡 Propietarios Privados: % de ingresos que reciben los dueños de los alojamientos  
+        - 🟢 Economía Local: % de ingresos que se distribuyen en comercios, servicios y empleo local  
+        """)
+
+        # Mostrar tabla resumen de impacto económico por ciudad si hay datos
+        st.markdown("### 🏙️ Resumen de Impacto Económico por Ciudad")
+        if 'kpis_ciudad' in datasets and not datasets['kpis_ciudad'].empty:
+            df_ciudad = datasets['kpis_ciudad']
+            cols = []
+            if 'ciudad' in df_ciudad.columns:
+                cols.append('ciudad')
+            if 'total_listings' in df_ciudad.columns:
+                cols.append('total_listings')
+            if 'precio_medio' in df_ciudad.columns:
+                cols.append('precio_medio')
+            if 'impacto_economico' in df_ciudad.columns:
+                cols.append('impacto_economico')
+            if cols:
+                st.dataframe(df_ciudad[cols].rename(columns={
+                    'ciudad': 'Ciudad',
+                    'total_listings': 'Alojamientos',
+                    'precio_medio': 'Precio Medio (€)',
+                    'impacto_economico': 'Impacto Económico (M€)'
+                }), use_container_width=True)
+        else:
+            st.info("ℹ️ No hay datos detallados por ciudad disponibles para mostrar la tabla.")
+        
+    with tab7:
+        
+        st.header("📅 Ocupación Turística")
+
+        st.markdown(f"### 🏙️ Análisis de Ocupación en {ciudad_seleccionada}")
+
+        st.markdown("""<div style="background-color: rgba(0, 212, 255, 0.08); border-left: 3px solid #00d4ff; padding: 10px; margin-bottom: 20px; border-radius: 3px;">
+        <p style="margin: 0; font-size: 0.9rem; line-height: 1.4; color: #f2f2f2;">
+        📅 <strong>Esta sección muestra cuántos días al año están ocupados o libres los alojamientos turísticos</strong> (Airbnb, apartamentos turísticos) en la ciudad seleccionada, y cómo evoluciona la ocupación a lo largo de los meses.
+        </p></div>""", unsafe_allow_html=True)
+
+        df = datasets.get('listings_precios', pd.DataFrame())
+        if df.empty or 'availability_365' not in df.columns:
+            st.warning("⚠️ No hay datos de ocupación disponibles para mostrar esta sección.")
+
+        if 'city' in df.columns:
+            df = df[df['city'].str.lower() == ciudad_seleccionada.lower()]
+
+        avail = pd.to_numeric(df['availability_365'], errors='coerce').dropna()
+        total_listings = len(avail)
+        if total_listings == 0:
+            st.warning("⚠️ No hay datos de ocupación válidos para la ciudad seleccionada.")
+
+        dias_libres_total = avail.sum()
+        dias_ocupados_total = total_listings * 365 - dias_libres_total
+
+        col1, col2 = st.columns(2)
+        with col1:
+            st.metric(
+                label="📆 Días Ocupados (Total)",
+                value=f"{int(dias_ocupados_total):,}",
+                help="Suma de días al año en que los alojamientos están ocupados (reservados) en el periodo analizado."
+            )
+        with col2:
+            st.metric(
+                label="🛏️ Días Libres (Total)",
+                value=f"{int(dias_libres_total):,}",
+                help="Suma de días al año en que los alojamientos están libres (no reservados) en el periodo analizado."
+            )
+
+        st.markdown("""<div style="background-color: rgba(40, 167, 69, 0.08); border: 1px solid #28a745; border-radius: 8px; padding: 12px; margin-bottom: 15px;">
+        <p style="margin: 0; font-size: 0.9rem; line-height: 1.4; color: #f2f2f2;">
+        <strong>💡 ¿Qué significan estos números?</strong>  
+        Un mayor número de días ocupados indica alta demanda turística. Muchos días libres pueden señalar estacionalidad o baja demanda.
+        </p></div>""", unsafe_allow_html=True)
+
+        st.markdown("### 📈 Evolución Mensual de la Ocupación")
+
+        meses = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
+        factor_estacional = [0.6, 0.65, 0.75, 0.85, 0.95, 1.1, 1.3, 1.35, 1.15, 0.9, 0.7, 0.65]
+        ocupacion_media = (365 - avail.mean()) / 365
+        ocupacion_mensual = [ocupacion_media * 365 / 12 * f for f in factor_estacional]
+
+        fig = go.Figure()
+        fig.add_trace(go.Scatter(
+            x=meses,
+            y=ocupacion_mensual,
+            mode='lines+markers',
+            line=dict(color='#00d4ff', width=4),
+            marker=dict(size=10, color='#28a745'),
+            name="Días Ocupados (estimado)"
+        ))
+        fig.update_layout(
+            title={
+                'text': f"📈 Ocupación Turística Mensual Estimada - {ciudad_seleccionada}",
+                'font': {'color': 'white', 'size': 18},
+                'x': 0.5
+            },
+            xaxis_title="Mes",
+            yaxis_title="Días Ocupados (media por listing)",
+            plot_bgcolor='rgba(0,0,0,0)',
+            paper_bgcolor='rgba(0,0,0,0)',
+            font_color='white',
+            height=400,
+            margin=dict(l=20, r=20, t=60, b=50),
+            showlegend=False
+        )
+        fig.update_xaxes(gridcolor='rgba(255,255,255,0.2)')
+        fig.update_yaxes(gridcolor='rgba(255,255,255,0.2)')
+
+        st.plotly_chart(fig, use_container_width=True)
+
+        st.markdown("""<div style="background-color: rgba(0, 212, 255, 0.05); border-radius: 8px; padding: 12px; margin-top: 15px;">
+        <p style="margin: 0; font-size: 0.9rem; line-height: 1.4; color: #f2f2f2;">
+        <strong>🎯 Interpreta el gráfico:</strong>  
+        Los picos en verano y festivos reflejan la estacionalidad del turismo urbano en España.  
+        Si tienes datos mensuales reales, puedes sustituir la estimación por los valores reales.
+        </p></div>""", unsafe_allow_html=True)
     
     # Footer con información de trazabilidad y fuentes
     st.markdown("---")
@@ -4361,6 +4449,8 @@ def main():
         """, 
         unsafe_allow_html=True
     )
+    
+
 
 # Ejecución de la aplicación
 if __name__ == "__main__":
