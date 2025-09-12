@@ -5,11 +5,13 @@
 ![Python](https://img.shields.io/badge/Python-3.9%2B-blue?style=for-the-badge&logo=python&logoColor=white)
 ![Streamlit](https://img.shields.io/badge/Streamlit-Optimizado-ff4b4b?style=for-the-badge&logo=streamlit&logoColor=white)
 🔗 **Enlaces Importantes**
-- 🛠️ **Guía técnica:** `/docs/technical_guide.md`
-- 📊 **Manual de KPIs:** `/docs/kpis_methodology.md`
-- 🖥️ **Manual dashboard:** `/docs/dashboard_manual.md`
+- 🛠️ **Guía técnica:** `/docs/guia_tecnica.md`
+- 📊 **Manual de KPIs:** `/docs/kpis_metodologia.md`
+- 🖥️ **Manual dashboard:** `/docs/manual_dashboard.md`
 
 ![Status](https://img.shields.io/badge/Status-Complete-green?style=for-the-badge)
+
+https://consultoraturismoairbnb.streamlit.app/
 
 ### 📊 Análisis del Impacto Urbano de Airbnb en España
 #### *Madrid • Barcelona • Mallorca*
@@ -22,7 +24,6 @@
 </div>
 
 ---
-
 ## 🎯 **OBJETIVOS DEL PROYECTO**
 
 > **CONSULTORA CONTRATADA POR GOBIERNO LOCAL**
@@ -33,7 +34,8 @@
 - 🏘️ **Densidad por barrio:** Alojamientos Airbnb por km² o por 1.000 habitantes
 - ⚖️ **Ratio turístico/residencial:** % de viviendas dedicadas a Airbnb vs. residenciales
 - 🚨 **Saturación territorial:** Capacidad turística vs. población/área local
-- 💸 **Análisis económico:** Impacto económico del turismo en las ciudades analizadas. 
+- 💸 **Análisis económico:** Impacto económico del turismo en las ciudades analizadas.
+- 🔥 **Ocupación:** Demanda de alojamiento turístico durante el periodo analizado.
 
 ---
 
@@ -50,7 +52,7 @@
 ## 📁 **ESTRUCTURA DEL PROYECTO**
 
 ```
-consultores_turismo_airbnb/
+consultora_turismo_airbnb/
 ├── 📋 README.md                    # Documentación principal
 ├── 📦 requirements.txt             # Dependencias del proyecto
 ├── 
@@ -58,13 +60,14 @@ consultores_turismo_airbnb/
 │   ├── external/                   # Fuentes externas (INE, demografía, inmobiliarios)
 │   │   ├── datos_demograficos.csv
 │   │   ├── estadisticas_turismo.csv
-│   │   ├── precios_alquileres.csv
+│   │   ├── precios_alquileres_reales_procesados.csv
 │   │   └── precios_inmobiliarios_reales.csv
 │   └── processed/                  # Datos procesados y consolidados
 │       ├── airbnb_consultores_turismo.db    # Base de datos principal
-│       ├── listings_madrid_new.csv          # Dataset Madrid consolidado (25 columnas)
-│       ├── listings_unificado.csv           # Dataset multi-ciudad
+│       ├── listings_unificado.csv           # 🎯 Dataset principal (61k registros)
+│       ├── listings_nuevo.csv               # Dataset con precios detallados
 │       ├── kpis_por_barrio.csv             # KPIs territoriales
+│       ├── kpis_por_ciudad.csv             # KPIs agregados por ciudad
 │       └── neighbourhoods_*.geojson         # Geometrías de barrios
 ├── 
 ├── 📓 notebooks/
@@ -73,48 +76,49 @@ consultores_turismo_airbnb/
 │   └── persona_c_business_intelligence.ipynb # Visualizaciones
 ├── 
 ├── 🖥️ streamlit_app/
-│   ├── app.py                      # Dashboard principal
-│   ├── pages/                      # Páginas del dashboard
-│   └── utils/                      # Utilidades del dashboard
+│   ├── app_unificado.py            # 🚀 APLICACIÓN PRINCIPAL
+│   ├── app_nuevo.py                # Dashboard alternativo
+│   └── fondobannerconsultora.jpg   # Assets visuales
 ├── 
-├── 🔧 src/
-│   ├── data_processing/            # Módulos de procesamiento
-│   ├── analysis/                   # Funciones de análisis
-│   └── visualization/              # Módulos de visualización
-└── 
 └── 📖 docs/                        # Documentación adicional
-    ├── technical_guide.md          # Guía técnica del proyecto
-    ├── kpis_methodology.md         # Manual de metodología KPIs
-    ├── dashboard_manual.md         # Manual de usuario dashboard
-    ├── presentation_script.md      # Guión presentación ejecutiva (20 min)
-    └── presentation_slides.md      # Especificaciones slides (18 slides)
+    ├── guia_tecnica.md             # Guía técnica del proyecto
+    ├── kpis_metodologia.md         # Manual de metodología KPIs
+    └── manual_dashboard.md         # Manual de usuario dashboard
 ```
 
 ---
 
 ## 📊 **DATASETS Y FUENTES DE DATOS**
 
-### 🏛️ **Dataset Principal: listings_unificado.csv**
+### � **Dataset Principal: listings_unificado.csv**
 
-Nuestro dataset consolidado combina datos de Inside Airbnb con datos externos del Instituto de Estadística, los Censos de cada ciudad y un análisis temporal avanzado:
+Nuestro dataset consolidado combina datos de Inside Airbnb para **Barcelona, Madrid y Mallorca** con **61,289 registros** totales:
 
 #### **🔍 CARACTERÍSTICAS PRINCIPALES**
-- **Precio consolidado** → `price_market` que combina precios base + datos de calendar
-- **Métricas económicas** → Disponibilidad y precios
-- **Intensidad turística** → Score 0-100 que evalúa la presión turística por alojamiento
-- **Datos de regulación** → Licencias oficiales y políticas
+- **📊 Estructura**: 11 columnas optimizadas para análisis urbano
+- **💰 Precios**: Integración con `listings_nuevo.csv` para métricas económicas
+- **🗺️ Geolocalización**: Coordenadas precisas por barrio y distrito
+- **🏠 Tipología**: Clasificación completa de tipos de alojamiento
+- **📈 Disponibilidad**: Datos de ocupación y disponibilidad anual
+
+#### **� INTEGRACIÓN CON LA APLICACIÓN**
+La aplicación principal `app_unificado.py`:
+1. **Carga** `listings_unificado.csv` como base estructural
+2. **Enriquece** con precios de `listings_nuevo.csv`
+3. **Filtra** datos (elimina precios extremos ≥6501€, registros incompletos)
+4. **Calcula** métricas en tiempo real (ocupación, densidad, impacto económico)
 
 #### **📈 PRINCIPALES MÉTRICAS CALCULADAS**
-- `ubicación` - Localización de alojamientos para el estudio de la saturación turística por ciudad. 
-- `Neighbourhood` - Clasificación de la saturación turística por ciudad para análisis del comportamiento de los huéspedes.
-- `precio` - Estudio del precio medio por ciudad y barrio para profundizar en el conocimiento de cada ciudad. 
-- `availability` - Comprobación de la disponibilidad de alojamientos para conocer la concentración turística. 
+- **Densidad turística** → Alojamientos por barrio y distrito
+- **Ocupación estimada** → `(365 - availability_365) / 365 * 100`
+- **Precio medio** → Promedio ponderado por ciudad/barrio
+- **Impacto económico** → `listings × precio_medio × ocupación × días`
 
 ### 🗃️ **Fuentes de Datos Integradas**
-- **Inside Airbnb:** Listings base + 9.2M registros de calendar
-- **INE:** Datos demográficos y de vivienda
-- **Ayuntamientos:** Límites territoriales y regulaciones
-- **Fuentes inmobiliarias:** Precios de mercado por zona
+- **Inside Airbnb**: Listings base con geolocalización y disponibilidad
+- **Dataset Precios**: `listings_nuevo.csv` con análisis económico detallado
+- **INE**: Datos demográficos y de vivienda por barrios
+- **Ayuntamientos**: Límites territoriales (GeoJSON) y regulaciones
 
 ---
 
@@ -151,14 +155,18 @@ jupyter notebook notebooks/persona_c_business_intelligence.ipynb
 ### 🖥️ **3. Lanzar Dashboard**
 
 ```bash
-# Ejecutar aplicación Streamlit (versión optimizada)
-streamlit run streamlit_app/nuevo_app.py
+# 🚀 APLICACIÓN PRINCIPAL - Dashboard completo
+streamlit run streamlit_app/app_unificado.py
 
-# El dashboard incluye nuevas funcionalidades:
-# - Análisis temporal avanzado
-# - Métricas de intensidad turística
-# - Performance mejorado para datasets grandes
-# - Conclusiones y recomendaciones
+# 📊 Dashboard alternativo (análisis específicos)
+streamlit run streamlit_app/app_nuevo.py
+
+# Funcionalidades del dashboard principal:
+# - Análisis integrado de listings_unificado.csv + precios
+# - Mapas interactivos por barrio y distrito
+# - KPIs en tiempo real con filtrado automático
+# - Métricas económicas y de saturación turística
+# - Visualizaciones optimizadas para 61k registros
 ```
 
 ---
@@ -184,19 +192,22 @@ streamlit run streamlit_app/nuevo_app.py
 
 ## 📈 **DASHBOARD INTERACTIVO**
 
-### 🖥️ **Funcionalidades del Dashboard**
-- 🗺️ **Mapas interactivos** de densidad por barrio con datos actualizados
-- 📊 **KPIs en tiempo real** para las 3 ciudades con métricas consolidadas
-- 🚨 **Sistema de alertas** por umbrales de saturación basado en tourism_intensity
-- 📋 **Informes automatizados** para autoridades con datos de regulación
-- 🔄 **Comparativas temporales** y entre ciudades con análisis estacional
-- 📈 **Análisis de volatilidad** de precios y disponibilidad por zona
-- ⚡ **Performance optimizado** con base de datos SQLite integrada
+https://consultoraturismoairbnb.streamlit.app/
 
-### 🎯 **Acceso**
-- **Demo en vivo:** [URL del deploy]
-- **Código fuente:** `/streamlit_app/`
-- **Documentación:** `/docs/dashboard_manual.md`
+### 🖥️ **Funcionalidades del Dashboard Principal (`app_unificado.py`)**
+- 🗺️ **Mapas interactivos** de densidad por barrio con datos en tiempo real
+- 📊 **KPIs consolidados** para las 3 ciudades con métricas validadas
+- 💰 **Análisis de precios** integrado de múltiples fuentes de datos
+- 🚨 **Sistema de alertas** por umbrales de saturación territorial
+- 📋 **Informes automatizados** listos para autoridades locales
+- 🔄 **Filtrado inteligente** de datos extremos y registros corruptos
+- ⚡ **Performance optimizado** para datasets de 60k+ registros
+
+### 🎯 **Acceso y Tecnología**
+- **Aplicación principal:** `streamlit_app/app_unificado.py`
+- **Dataset base:** `listings_unificado.csv` (61,289 registros)
+- **Enriquecimiento:** `listings_nuevo.csv` (datos de precios)
+- **Documentación:** `/docs/manual_dashboard.md`
 
 ---
 
@@ -258,9 +269,9 @@ Hemos desarrollado un **paquete completo de presentación ejecutiva** diseñado 
 ## 📚 **DOCUMENTACIÓN TÉCNICA**
 
 ### 🔗 **Enlaces Importantes**
-- 🛠️ **Guía técnica:** `/docs/technical_guide.md`
-- 📊 **Manual de KPIs:** `/docs/kpis_methodology.md`
-- 🖥️ **Manual dashboard:** `/docs/dashboard_manual.md`
+- 🛠️ **Guía técnica:** `/docs/guia_tecnica.md`
+- 📊 **Manual de KPIs:** `/docs/kpis_metodologia.md`
+- 🖥️ **Manual dashboard:** `/docs/manual_dashboard.md`
 
 ### 📋 **Fuentes de Datos y Referencias Bibliográficas**
 
@@ -367,27 +378,26 @@ Todos los datos han sido procesados siguiendo estándares de calidad científica
 
 ## 🆕 **ÚLTIMAS ACTUALIZACIONES**
 
-### 📅 **Junio 2025 - Versión Consolidada**
+### 📅 **Julio 2025 - Versión Consolidada y Optimizada**
 
-#### **🔄 Mejoras en Procesamiento de Datos**
-- ✅ **Nuevo dataset consolidado:** `listings_unificado.csv`
-- ✅ **Integración calendar data:** Procesados 9.2M registros de disponibilidad
-- ✅ **Métricas avanzadas:** Tourism intensity, volatilidad, premiums estacionales
-- ✅ **Base de datos optimizada:** SQLite integrada para consultas rápidas
+#### **🎯 Aplicación Principal: `app_unificado.py`**
+- ✅ **Dashboard consolidado:** Integra `listings_unificado.csv` + precios de `listings_nuevo.csv`
+- ✅ **Filtrado automático:** Elimina registros corruptos y precios extremos (≥6501€)
+- ✅ **Performance optimizado:** Manejo eficiente de 61k registros
+- ✅ **Métricas en tiempo real:** Cálculo dinámico de KPIs por ciudad/barrio
+- ✅ **Interfaz mejorada:** Tema oscuro y visualizaciones optimizadas
 
-#### **🖥️ Mejoras en Dashboard**
-- ✅ **Performance optimizado** para datasets grandes
-- ✅ **Nuevas visualizaciones** de análisis temporal 
-- ✅ **Tema oscuro personalizado** para mejor experiencia de usuario
-- ✅ **Alertas dinámicas** basadas en umbrales inteligentes
-- ✅ **Exportación automática** de informes regulatorios
+#### **� Datasets Actualizados**
+- ✅ **`listings_unificado.csv`:** Dataset principal con 61,289 registros
+- ✅ **11 columnas optimizadas:** ID, ciudad, barrio, coordenadas, tipo, precio, disponibilidad
+- ✅ **Integración de precios:** Enriquecimiento desde `listings_nuevo.csv`
+- ✅ **Documentación completa:** Notebooks explicativos para cada dataset
 
-#### **📊 Nuevas Funcionalidades Analíticas**
-- ✅ **Score tourism_intensity** (0-100) por alojamiento
-- ✅ **Análisis estacional** completo (verano/invierno/fines de semana)
-- ✅ **Volatilidad de precios** con detección de anomalías
-- ✅ **Correlaciones avanzadas** entre variables territoriales
-- ✅ **Predicción de saturación** por barrio y temporada
+#### **� Mejoras Técnicas**
+- ✅ **Carga robusta:** Múltiples rutas de búsqueda para datasets
+- ✅ **Gestión de errores:** Manejo inteligente de datos faltantes
+- ✅ **Cálculos validados:** Métricas económicas y de saturación verificadas
+- ✅ **Documentación actualizada:** README y docs técnicos sincronizados
 
 ---
 
@@ -404,11 +414,11 @@ Todos los datos han sido procesados siguiendo estándares de calidad científica
 
 **Contribuyendo al desarrollo urbano equilibrado y sostenible**
 
-[![Streamlit](enlace deploy)
+**🚀 Aplicación Principal:** https://consultoraturismoairbnb.streamlit.app/
 
 ---
 
-*📅 Última actualización: Junio 2025 | 🏛️ Consultores en Turismo Sostenible*  
-*🆕 Versión consolidada con dataset avanzado y mejoras de performance*
+*📅 Última actualización: Julio 2025 | 🏛️ Consultores en Turismo Sostenible*  
+*🆕 Versión consolidada con dataset unificado de 61k registros y análisis de precios integrado*
 
 </div>
